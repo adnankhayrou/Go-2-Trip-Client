@@ -2,6 +2,7 @@
 import React from 'react'
 import NavBar from './Layouts/NavBar'
 import SideBar from './Layouts/SideBar'
+import Footer from './Layouts/Footer'
 import Cookies from 'js-cookie';
 
 
@@ -13,7 +14,7 @@ const Home = () => {
   return (
     <>
       <NavBar/>
-      <SideBar/>
+      {/* <SideBar/> */}
     <div className="flex items-center mt-10 pt-10 justify-center">
     <div>
       <div>
@@ -25,6 +26,9 @@ const Home = () => {
         </div>
     </div>
     </div>
+    
+
+    {/* <Footer/> */}
     </>
   )
 }
