@@ -11,7 +11,7 @@ const NavBar = () => {
           <div className=" flex items-center justify-start rtl:justify-end">
             <Link to="" className="flex md:me-24">
               <img src={logo} width={40} alt="Logo"/>
-              <span className="self-center text-xl  font-semibold sm:text-2xl whitespace-nowrap dark:text-black pt-3">Go2Trip</span>
+              <span className="self-center font-bold sm:text-2xl whitespace-nowrap dark:text-black pt-3">Go2Trip</span>
             </Link>
           </div>
           {/* <div className="flex items-center">
