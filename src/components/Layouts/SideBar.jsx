@@ -14,21 +14,21 @@ const SideBare = () => {
     };
 
     const navigate = useNavigate()
-  const logout = () => {
-      axios.get('http://localhost:3000/api/auth/logout')
-      .then(result => {
-        Cookies.remove('jwtToken');
-        Cookies.remove('user') ;
-        logoutUser()
-        const msg = result?.data.success;
-        console.log(msg);
-        navigate('/login')
-      })
-      .catch(err => {
-        const error = err.response ? err.response.data.error : 'An error occurred in logout';
-        console.log(error);
-      });
-    }
+
+    const logout = () => {
+        axios.get('http://localhost:3000/api/auth/logout')
+        .then(result => {
+            Cookies.remove('jwtToken');
+            Cookies.remove('user') ;
+            const msg = result?.data.success;
+            console.log(msg);
+            navigate('/login')
+        })
+        .catch(err => {
+            const error = err.response ? err.response.data.error : 'An error occurred in logout';
+            console.log(error);
+        });
+        }
   return (
     <>
     {!sidebarOpen && (
