@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
-import NavBar from './NavBar'
+import NavBar from './Layouts/NavBar'
+import SideBar from './Layouts/SideBar'
 import Cookies from 'js-cookie';
 
 
@@ -12,6 +13,7 @@ const Home = () => {
   return (
     <>
       <NavBar/>
+      <SideBar/>
     <div className="flex items-center mt-10 pt-10 justify-center">
     <div>
       <div>
