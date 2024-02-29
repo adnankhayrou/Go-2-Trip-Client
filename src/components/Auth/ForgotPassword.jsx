@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import logo from "../../assets/images/gototrip.svg";
 import axios from "axios";
 
 const ForgotPassword = () => {
@@ -80,10 +80,16 @@ const [formData, setFormData] = useState({
             </button>
             </div>)}
         </div>
-        <Link className="mt-6 mb-2 block w-20 select-none rounded-lg bg-black py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        
+            <div className="flex items-center justify-center me-5">
+                <img src={logo} width={60} alt="Logo"/>
+            </div>
+
+            <Link className="mt-6 mb-2 block w-20 select-none rounded-lg bg-black py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 to="/">
                 Back
             </Link>
+
             <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
             Reset Password
             </h4>
