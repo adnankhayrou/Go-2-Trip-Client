@@ -4,6 +4,9 @@ import NavBar from './Layouts/NavBar'
 import SideBar from './Layouts/SideBar'
 import Footer from './Layouts/Footer'
 import Cookies from 'js-cookie';
+import fullcover from "../assets/images/fullcover.svg";
+import homeCss from './home.css'
+
 
 
 const Home = () => {
@@ -15,20 +18,75 @@ const Home = () => {
     <>
       <NavBar/>
       {/* <SideBar/> */}
-    <div className="flex items-center mt-10 pt-10 justify-center">
-    <div>
-      <div>
-          {/* {user && (
-            <div className="bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded relative" role="alert">
-              <span className="block sm:inline">Welcome {user.name}, Your Role is {user.role}</span> 
-            </div>
-          )} */}
-        </div>
-    </div>
-    </div>
-    
+      <div className="home flex items-center justify-center">
+            {user && (
+              <div className="bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded relative" role="alert">
+                <span className="block sm:inline">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+      </div>
 
-    {/* <Footer/> */}
+      <div className=" block items-center justify-center">
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            {user && (
+              <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
+                <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
+              </div>
+            )}
+            
+      </div>
+
+
+      <Footer/>
     </>
   )
 }

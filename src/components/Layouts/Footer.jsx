@@ -5,7 +5,7 @@ import logo from "../../assets/images/gotow.svg";
 const Footer = () => {
   return (
     <>
-    <footer className="fixed bottom-0 w-full bg-white dark:bg-black">
+    <footer className=" w-full bg-white dark:bg-black">
         <div className="mx-auto w-full max-w-screen-xl">
             <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
             <div>
