@@ -39,7 +39,7 @@ const SideBare = () => {
           onClick={toggleSidebar}
           aria-controls="sidebar-multi-level-sidebar"
           type="button"
-          className="inline-flex items-center pt-16 p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          className="inline-flex items-center pt-16 p-2 mt-8 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
           <span className="sr-only">Open sidebar</span>
           <svg
             className="w-6 h-6"
@@ -59,12 +59,12 @@ const SideBare = () => {
       {/* Sidebar */}
       <aside
         id="sidebar-multi-level-sidebar"
-        className={` m-4 fixed h-4/5 mt-28 left-0 r w-60  transition-transform ${
-          sidebarOpen ? '' : '-translate-x-full sm:translate-x-0'
+        className={`m-4 fixed h-4/5 mt-28 left-0 r w-60  transition-transform ${
+          sidebarOpen ? '' : 'hidden sm:block'
         }`}
         aria-label="Sidebar">
         
-        <div className=" rounded-2xl h-full px-3 pt-8 py-4 overflow-y-auto bg-white dark:bg-white border-light shadow-2xl">
+        <div className=" rounded-2xl h-full px-3 py-4 overflow-y-auto bg-white dark:bg-white border-light shadow-2xl">
           <div className='text-end p-0'>
             <button
             onClick={toggleSidebar}
