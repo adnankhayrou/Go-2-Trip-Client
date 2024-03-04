@@ -5,7 +5,7 @@ import logo from "../../assets/images/gototrip.svg";
 
 const NavBar = () => {
   return (
-    <nav className="fixed top-0 left-0 z-40 w-full bg-white border-light shadow-lg">
+    <nav className="fixed top-0 left-0 z-40 w-full bg-white border-light shadow-2xl">
       <div className="px-3 py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center sm:justify-start justify-center sm:ms-3">
           <div className=" flex items-center justify-start rtl:justify-end">
