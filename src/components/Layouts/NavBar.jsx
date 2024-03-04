@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/images/gototrip.svg";
 
 const NavBar = () => {
-  const [bgColor, setBgColor] = useState("transparent");
+  const [bgColor, setBgColor] = useState("rgba(255, 255, 255, 0.9)");
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
-        setBgColor("rgba(255, 255, 255, 0.5)");
+        setBgColor("rgba(255, 255, 255, 0.9)");
       } else {
         setBgColor("whitesmoke");
       }

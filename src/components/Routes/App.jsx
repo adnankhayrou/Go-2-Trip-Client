@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import Home from './components/Home'
-import Register from './components/Auth/Register'
-import Login from './components/Auth/Login'
-import ForgotPassword from './components/Auth/ForgotPassword'
-import ResetPassword from './components/Auth/ResetPassword'
+import Home from '../Home/Home'
+import Register from '../Auth/Register'
+import Login from '../Auth/Login'
+import ForgotPassword from '../Auth/ForgotPassword'
+import ResetPassword from '../Auth/ResetPassword'
 import Cookies from 'js-cookie';
-import VerifyEmail from './components/Auth/VerifyEmail'
+import VerifyEmail from '../Auth/VerifyEmail'
 
 // eslint-disable-next-line react/prop-types
 const LogoutMiddleware = ({ children }) => {

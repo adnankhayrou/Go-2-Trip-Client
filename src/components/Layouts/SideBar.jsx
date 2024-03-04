@@ -59,12 +59,12 @@ const SideBare = () => {
       {/* Sidebar */}
       <aside
         id="sidebar-multi-level-sidebar"
-        className={`fixed left-0 r w-60 h-screen transition-transform ${
+        className={` m-4 fixed h-4/5 mt-28 left-0 r w-60  transition-transform ${
           sidebarOpen ? '' : '-translate-x-full sm:translate-x-0'
         }`}
         aria-label="Sidebar">
         
-        <div className="h-full px-3 pt-8 py-4 overflow-y-auto bg-white dark:bg-white border-light shadow-2xl">
+        <div className=" rounded-2xl h-full px-3 pt-8 py-4 overflow-y-auto bg-white dark:bg-white border-light shadow-2xl">
           <div className='text-end p-0'>
             <button
             onClick={toggleSidebar}
@@ -107,7 +107,7 @@ const SideBare = () => {
 
             <li className=''>
             <Link to="" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7 text-gray-500 transition duration-75 dark:text-sky-500 group-hover:text-gray-900 dark:group-hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7 text-gray-500 transition duration-75 dark:text-yellow-600 group-hover:text-gray-900 dark:group-hover:text-white">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-1.313M21 7.5v2.25m0-2.25l-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3l2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75l2.25-1.313M12 21.75V19.5m0 2.25l-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25" />
             </svg>
                <span className="ms-3">All Products</span>
