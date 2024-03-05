@@ -2,14 +2,14 @@
 import React from 'react'
 import NavBar from '../Layouts/NavBar'
 import Footer from '../Layouts/Footer'
-import SideBar from '../Layouts/SideBar'
+// import SideBar from '../Layouts/SideBar'
 import Cookies from 'js-cookie';
 import homeCss from './home.css'
 
 
 
 const Home = () => {
-  const user = JSON.parse(Cookies.get('user'));
+  // const user = JSON.parse(Cookies.get('user'));
 
   const handleClick = () => {
     const nextSection = document.querySelector('#nextSection');
@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <>
       <NavBar/>
-      <SideBar/>
+      {/* <SideBar/> */}
       
       <div className="home flex items-center justify-center">
         <div className='font-bold text-white sm:mt-52 mt-28 me-6'>
@@ -52,7 +52,7 @@ const Home = () => {
       </div>
 
       <div id='nextSection' className=" block items-center justify-center mb-10">
-            {user && (
+            {/* {user && (
               <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
                 <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
               </div>
@@ -76,7 +76,7 @@ const Home = () => {
               <div className="block bg-green-100 mt-10 border border-green-400 text-green-700 fw-bold px-4 py-3 rounded" role="alert">
                 <span className="">Welcome {user.name}, Your Role is {user.role}</span> 
               </div>
-            )}  
+            )}   */}
       </div>
 
       {/* <div id='nextSection' className=" block items-center justify-center mb-10">
