@@ -7,6 +7,7 @@ import ResetPassword from '../Auth/ResetPassword'
 import Cookies from 'js-cookie';
 import VerifyEmail from '../Auth/VerifyEmail'
 import Dashboard from '../Dashboard/Dashboard'
+import AddProduct from '../Products/AddProduct'
 
 // eslint-disable-next-line react/prop-types
 const LogoutMiddleware = ({ children }) => {
@@ -38,8 +39,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-      <Route path='/' element={ <Home /> } />
-      <Route path='/dashboard' element={<LogoutMiddleware> <Dashboard /> </LogoutMiddleware>} />
+        <Route path='/' element={ <Home /> } />
+        <Route path='/dashboard' element={<LogoutMiddleware> <Dashboard /> </LogoutMiddleware>} />
+        <Route path='/addProduct' element={<LogoutMiddleware> <AddProduct /> </LogoutMiddleware>} />
         <Route path='/register' element={<LoginMiddleware> <Register /> </LoginMiddleware>} />
         <Route path='/login' element={<LoginMiddleware> <Login /> </LoginMiddleware>} />
         <Route path='/forgotPassword' element={ <ForgotPassword />} />

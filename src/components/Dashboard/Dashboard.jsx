@@ -15,17 +15,17 @@ const Dashboard = () => {
     <Statistics/>
 
      {/* add button */}
-     <div className="sm:ml-64 "></div>
+     {/* <div className="sm:ml-64 "></div>
       <div className="lg:flex sm:grid items-center justify-center "></div>
-      <div className="sm:ml-64 sm:px-14 ps-3 my-3 sm:me-0 me-6">
-        <div className=" rounded-lg  ">
+      <div className="sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ">
+        <div className=" rounded-lg">
           <div className='flex justify-end'>
-            <Link to="/" className="block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
+            <Link to="/" className="shadow-2xl block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
               + Add New Product
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
         {/* single table */}
       {loading ? (
         <div className="sm:ml-64 pt-2">
@@ -51,12 +51,43 @@ const Dashboard = () => {
       
       {/* products table */}
       <div className="sm:ml-64 sm:px-10 ps-3">
-        <div className=" overflow-x-auto rounded-lg mb-3 me-3 shadow-lg">
+        <div className="overflow-x-auto rounded-lg mb-3 me-3 shadow-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-white dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
-                <th scope="col" className=" text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
+                <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
                   Products details
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="bg-gray-100">
+                  
+                </th>
+                <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
+                    <Link to="/addProduct" className="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span className='p-1'>
+                            new
+                        </span>
+                    </Link> 
                 </th>
               </tr>
               <tr>
@@ -79,16 +110,19 @@ const Dashboard = () => {
                 condition
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  View
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Action
                 </th>
-                <th scope="col" className="px-6 rounded-tr-lg py-3">
+                <th scope="col" className="px-6 py-3">
                   Delete
                 </th>
               </tr>
             </thead>
             <tbody>
               {/* {apartments.map((apartment) => ( */}
-              <tr  className="odd:bg-white odd:dark:bg-white-200 even:bg-white-50 even:dark:bg-white-200">
+              <tr key={1}  className="odd:bg-white odd:dark:bg-white-200 even:bg-white even:dark:bg-white-200">
                 <th scope="row" className="px-10 py-4 font-medium whitespace-nowrap">
                   hbhbhbh
                 </th>
@@ -106,6 +140,16 @@ const Dashboard = () => {
                 </td>
                 <td className="px-9 py-4">
                 bhbhbhbh
+                </td>
+                <td className="px-9 py-4">
+                  <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                //   onClick={() => editApartment(apartment._id)}
+                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                  </svg>
+                  </a>
                 </td>
                 <td className="px-9 py-4">
                   <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
