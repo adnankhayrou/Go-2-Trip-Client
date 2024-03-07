@@ -20,7 +20,7 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get(`http://localhost:3000/api/product/userProducts/${user_id}`);
-      console.log(response.data.data);
+      // console.log(response.data.data);
       setProduct(response.data.data);
       setLoading(false);
     } catch (error) {

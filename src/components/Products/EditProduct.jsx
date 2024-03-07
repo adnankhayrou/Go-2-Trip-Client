@@ -21,7 +21,7 @@ const EditProduct = () => {
     const [formData, setFormData] = useState({
         name: '',
         images: [],
-        oldImages: [],
+        oldImages: oldImg,
         description: '',
         price: '',
         phone: '',
@@ -101,30 +101,31 @@ const EditProduct = () => {
         }
       };
 
-      useEffect(() => {
-        const fetchData = async () => {
-          try {
-    
-            const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
-            // console.log(response.data);
+      const fetchData = async () => {
+        try {
+  
+          const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
+          // console.log(response.data);
+          setFormData({
+              name: response.data.data.name,
+              oldImages: oldImg,
+              images: [],
+              description: response.data.data.description,
+              price: response.data.data.price,
+              phone: response.data.data.phone,
+              city_id: response.data.data.city_id,
+              category_id: response.data.data.category_id,
+              subCategory_id: response.data.data.subCategory_id,
+              user_id: user_id,
+            });
+            
             setOldImg(response.data.data.images)
-            setFormData({
-                name: response.data.data.name,
-                images: [],
-                description: response.data.data.description,
-                price: response.data.data.price,
-                phone: response.data.data.phone,
-                city_id: response.data.data.city_id,
-                category_id: response.data.data.category_id,
-                subCategory_id: response.data.data.subCategory_id,
-                user_id: user_id,
-              });
-    
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      useEffect(() => {
         fetchData();
       }, [product_id]);
 
@@ -177,7 +178,7 @@ const EditProduct = () => {
                                 {errors.phone && <span className="text-red-600 text-xs">{errors.phone}</span>}
                             </div>
 
-                            <div className='font-semibold border p-1.5 rounded-xl bg-black text-white'> Old images </div>
+                            <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'> Old images</div>
                            <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
                                 {oldImg.map((image,index)=>(
                                     <>
@@ -189,7 +190,7 @@ const EditProduct = () => {
                                 ))}
                             </div>
 
-                            {formData.images.length > 0 && (<div className='font-semibold border p-1.5 rounded-xl bg-black text-white'>New images</div>)}
+                            {formData.images.length > 0 && (<div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>New images</div>)}
                             <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
                                 {formData.images.map((image,index)=>(
                                     <>
