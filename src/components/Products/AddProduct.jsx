@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import NavBar from '../Layouts/NavBar'
-import SideBar from '../Layouts/SideBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import * as yup from 'yup';
@@ -12,27 +11,62 @@ const AddProduct = () => {
     const user_id = user._id
     const navigate = useNavigate();
    
-    const [apartments, setApartment] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
     const [addFormData, setAddFormData] = useState({
-        building_ID: '',
-        apartment_number: '',
-        resident_name: '',
-        resident_phone: '',
-        resident_cin: '',
-        condition: '',
+        name: '',
+        images: [],
+        description: '',
+        price: '',
+        phone: '',
+        city_id: '',
+        category_id: '',
+        subCategory_id: '',
         user_id: user_id,
     });
+    console.log(addFormData);
+    const removeImage = (e,index)=>{
+        e.preventDefault();
+        const updatedImages = [...addFormData.images];
+    
+        updatedImages.splice(index, 1);
+        setAddFormData({ ...addFormData, images: updatedImages });
+    }
+    const handleImageChange = (e) => {
+        const images = e.target.files;
+    const files = addFormData.images;
+    const promises = [];
+
+    for (let i = 0; i < images.length; i++) {
+        const file = images[i];
+        const reader = new FileReader();
+        const promise = new Promise((resolve, reject) => {
+                reader.onload = () => {
+                    files.push(reader.result);
+                    resolve();
+                };
+                reader.onerror = reject;
+            });
+
+            reader.readAsDataURL(file);
+            promises.push(promise);
+        }
+
+        Promise.all(promises).then(() => {
+            setAddFormData({ ...addFormData, images: files });
+            console.log(addFormData);
+        }).catch(error => console.error(error));
+    };
 
     const schema = yup.object().shape({
-        building_ID: yup.string().required('Building ID is Required'),
-        apartment_number: yup.number().required('Apartment Number is Required'),
-        resident_name: yup.string().required('Resident Name is Required'),
-        resident_phone: yup.string().required('Resident Phone is Required'),
-        resident_cin: yup.string().required('Resident CIN is Required'),
-        condition: yup.string().required('Condition is Required'),
+        name: yup.string().required('Product Name is Required'),
+        // images: yup.string().required('Image is Required'),
+        description: yup.string().required('Description is Required'),
+        price: yup.number().required('Price is Required'),
+        phone: yup.string().required('Phone number is Required'),
+        city_id: yup.string().required('City is Required'),
+        category_id: yup.string().required('Category is Required'),
+        subCategory_id: yup.string().required('SubCategory is Required'),
     });
 
     const handleSubmit = async (e) => {
@@ -41,13 +75,11 @@ const AddProduct = () => {
           await schema.validate(addFormData, { abortEarly: false });
           const requestData = { ...addFormData };
     
-          axios.post('http://localhost:3000/api/apartment/createApartment', requestData)
+          axios.post('http://localhost:3000/api/product/createProduct', requestData)
             .then(result => {
               const msg = result.data.success;
-              setRefetch(!refetch);
               sweetalert.fire('Success!', `${msg}`, 'success');
-              setShowModal(false)
-              resetForm()
+              navigate('/dashboard')
             })
             .catch(err => {
               const errorMsg = err.response ? err.response.data.error : 'An error occurred in add apartment';
@@ -66,39 +98,59 @@ const AddProduct = () => {
   return (
     <>
     <NavBar/>
-    {/* <SideBar/> */}
-    
+
      {/* add modal */}
     <div className="justify-center items-center flex pt-20 overflow-x-hidden overflow-y-hidden inset-0 z-50 outline-none focus:outline-none">
         <div className=" sm:w-full w-max my-6 mx-auto max-w-3xl">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-2">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-                        <p className=" text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
-
+                        <h2 className="text-base font-semibold leading-7 text-gray-900">Product Information</h2>
+                        <p className=" text-sm text-gray-600">You need to add a good Informations for a good results.</p>
+                        {<div className="text-red-600 text-xs text-center mt-2">{error}</div>}
                         <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-6">
                                 <label  className="block text-sm font-medium leading-6 text-gray-900">Product name</label>
                                 <div className="">
-                                    <input type="text" name="name" id="first-name" autoComplete="given-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
+                                    <input
+                                    value={addFormData.name}
+                                    onChange={(e) => setAddFormData({ ...addFormData, name: e.target.value })}
+                                    type="text" id="first-name" autoComplete="given-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
+                                </div>
+                                {errors.name && <span className="text-red-600 text-xs">{errors.name}</span>}
+                            </div>
+
+                            <div className="sm:col-span-3">
+                                <label className="block text-sm font-medium leading-6 text-gray-900">Product price</label>
+                                <div className="">
+                                    <input
+                                        value={addFormData.price}
+                                        onChange={(e) => setAddFormData({ ...addFormData, price: e.target.value })}
+                                     type="number"  min="0"  id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
+                                </div>
+                                <div className='sm:w-full w-60'>
+                                    {errors.price && <span className="text-red-600 text-xs">Price is Required</span>}
                                 </div>
                             </div>
 
                             <div className="sm:col-span-3">
-                                <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Product price</label>
+                                <label  className="block text-sm font-medium leading-6 text-gray-900">Phone</label>
                                 <div className="">
-                                    <input type="number" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
+                                    <input 
+                                    value={addFormData.phone}
+                                    onChange={(e) => setAddFormData({ ...addFormData, phone: e.target.value })}
+                                    type="tel" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
                                 </div>
+                                {errors.phone && <span className="text-red-600 text-xs">{errors.phone}</span>}
                             </div>
-
-                            <div className="sm:col-span-3">
-                                <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">Phone</label>
-                                <div className="">
-                                    <input type="tel" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
-                                </div>
+                           <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
+                                {addFormData.images.map((image,index)=>(
+                                    <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${image})`}}>
+                                        <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e)=>removeImage(e,index)}>x</button>
+                                    </div>
+                                
+                            ))}
                             </div>
-
                             <div className="sm:col-span-6">
                             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-90 h-24 border-2 border-gray-100 border-dashed rounded-lg cursor-pointer  dark:border-gray-500 dark:hover:border-gray-500 dark:hover:bg-gray-300">
                                 <div className="flex flex-col items-center justify-center pt-3 pb-4">
@@ -108,48 +160,66 @@ const AddProduct = () => {
                                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG (MAX. 800x400px)</p>
                                 </div>
-                                <input id="dropzone-file" type="file" className="hidden" multiple/>
+                                <input
+                                // value={addFormData.images}
+                                onChange={handleImageChange}
+                                // onChange={(e) => setAddFormData({ ...addFormData, images: e.target.files })}
+                                 id="dropzone-file" type="file" className="hidden" multiple/>
                             </label>
+                            {errors.images && <span className="text-red-600 text-xs">Image is Required</span>}
                             </div>
 
                             <div className="sm:col-span-2 sm:col-start-1">
                                 <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Category</label>
                                 <div className="">
-                                    <select id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
+                                    <select
+                                    value={addFormData.category_id}
+                                    onChange={(e) => setAddFormData({ ...addFormData, category_id: e.target.value })}
+                                      autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option value='65a536d4fd17c17fb51194a4'>United States</option>
+                                    
                                     </select>
                                 </div>
+                                {errors.category_id && <span className="text-red-600 text-xs">Category is Required</span>}
                             </div>
 
                             <div className="sm:col-span-2">
                                 <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">SubCategory</label>
                                 <div className="">
-                                    <select id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
+                                    <select
+                                    value={addFormData.subCategory_id}
+                                    onChange={(e) => setAddFormData({ ...addFormData, subCategory_id: e.target.value })}
+                                     id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option value='65a54ec9297c2563629c13e7'>United States</option>
+                                    
                                     </select>
                                 </div>
+                                {errors.subCategory_id && <span className="text-red-600 text-xs">SubCategory is Required</span>}
                             </div>
 
                             <div className="sm:col-span-2">
                                 <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">City</label>
                                 <div className="">
-                                    <select id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
+                                    <select
+                                    value={addFormData.city_id}
+                                    onChange={(e) => setAddFormData({ ...addFormData, city_id: e.target.value })}
+                                     id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option value='65a53fdb10f560e5ec524892'>United States</option>
+                                    
                                     </select>
                                 </div>
+                                {errors.city_id && <span className="text-red-600 text-xs">City is Required</span>}
                             </div>
 
                             <div className="col-span-full">
                                 <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">About</label>
                                 <div className="">
-                                    <textarea id="about" name="about" rows="2" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"></textarea>
+                                    <textarea 
+                                    value={addFormData.description}
+                                    onChange={(e) => setAddFormData({ ...addFormData, description: e.target.value })}
+                                    id="about" name="about" rows="2" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"></textarea>
                                 </div>
+                                {errors.description && <span className="text-red-600 text-xs">{errors.description}</span>}
                                 <p className="mt-2 text-sm leading-6 text-gray-600">Write a few.</p>
                             </div>
                         </div>
