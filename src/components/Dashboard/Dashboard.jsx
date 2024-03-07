@@ -3,11 +3,34 @@ import NavBar from '../Layouts/NavBar'
 import SideBar from '../Layouts/SideBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
-import * as yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import Statistics from './Statistics';
+import Cookies from 'js-cookie';
+
 const Dashboard = () => {
-    const [loading, setLoading] = useState(false);
+  const user = JSON.parse(Cookies.get('user') || null);
+  const user_id = user._id
+
+  const [loading, setLoading] = useState(false);
+  const [products, setProduct] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`http://localhost:3000/api/product/userProducts/${user_id}`);
+      console.log(response.data.data);
+      setProduct(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
     <NavBar/>
@@ -16,16 +39,16 @@ const Dashboard = () => {
 
      {/* add button */}
      {/* <div className="sm:ml-64 "></div>
-      <div className="lg:flex sm:grid items-center justify-center "></div>
-      <div className="sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ">
+      <div className="lg:flex sm:grid items-center justify-center "></div> */}
+      <div className="sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 sm:hidden">
         <div className=" rounded-lg">
           <div className='flex justify-end'>
-            <Link to="/" className="shadow-2xl block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
+            <Link to="/addProduct" className="shadow-2xl block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
               + Add New Product
             </Link>
           </div>
         </div>
-      </div> */}
+      </div>
         {/* single table */}
       {loading ? (
         <div className="sm:ml-64 pt-2">
@@ -59,25 +82,20 @@ const Dashboard = () => {
                   Products details
                 </th>
                 <th scope="col" className="bg-gray-100">
-                  
+                </th>
+                <th scope="col" className="bg-gray-100"> 
                 </th>
                 <th scope="col" className="bg-gray-100">
-                  
+                </th>
+                <th scope="col" className="bg-gray-100">                 
                 </th>
                 <th scope="col" className="bg-gray-100">
-                  
                 </th>
-                <th scope="col" className="bg-gray-100">
-                  
+                <th scope="col" className="bg-gray-100">    
                 </th>
-                <th scope="col" className="bg-gray-100">
-                  
+                <th scope="col" className="bg-gray-100">   
                 </th>
-                <th scope="col" className="bg-gray-100">
-                  
-                </th>
-                <th scope="col" className="bg-gray-100">
-                  
+                <th scope="col" className="bg-gray-100">               
                 </th>
                 <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
                     <Link to="/addProduct" className="flex items-center">
@@ -91,23 +109,26 @@ const Dashboard = () => {
                 </th>
               </tr>
               <tr>
-                <th scope="col" className="px-6 py-3">
-                Building ID
+                <th scope="col" className="px-8 py-3">
+                image
                 </th>
                 <th scope="col" className="px-6 py-3">
-                apartment number
+                name
+                </th>
+                <th scope="col" className="px-8 py-3">
+                price
+                </th>
+                <th scope="col" className="px-8 py-3">
+                city
+                </th>
+                <th scope="col" className="px-8 py-3">
+                phone
                 </th>
                 <th scope="col" className="px-6 py-3">
-                resident name
+                category
                 </th>
                 <th scope="col" className="px-6 py-3">
-                resident phone
-                </th>
-                <th scope="col" className="px-6 py-3">
-                resident cin
-                </th>
-                <th scope="col" className="px-6 py-3">
-                condition
+                subcategory
                 </th>
                 <th scope="col" className="px-6 py-3">
                   View
@@ -121,27 +142,31 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {/* {apartments.map((apartment) => ( */}
-              <tr key={1}  className="odd:bg-white odd:dark:bg-white-200 even:bg-white even:dark:bg-white-200">
-                <th scope="row" className="px-10 py-4 font-medium whitespace-nowrap">
-                  hbhbhbh
-                </th>
-                <td className="px-14 py-4">
-                  bhbhbhbh
+              {products.map((product, index) => (
+              <tr key={index}  className="odd:bg-white odd:dark:bg-white-200 even:bg-white even:dark:bg-white-200">
+                <td className="px-6 py-4">
+                <img src={`http://localhost:3000${product.images[0]}`} alt="" className='h-8 w-14 rounded'/>
+                 {/* {product.images[0]} */}
                 </td>
-                <td className="px-12 py-4">
-                bhbhbhbh
+                <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
+                  {product.name}
                 </td>
-                <td className="px-9 py-4">
-                  bhbhbhbh
+                <td className="px-8 py-4">
+                {product.price}DH
                 </td>
-                <td className="px-9 py-4">
-                bhbhbhbh
+                <td className="px-8 py-4">
+                {product.city_id.name}
                 </td>
-                <td className="px-9 py-4">
-                bhbhbhbh
+                <td className="px-8 py-4">
+                {product.phone}
                 </td>
-                <td className="px-9 py-4">
+                <td className="px-8 py-4">
+                {product.category_id.name}
+                </td>
+                <td className="px-8 py-4">
+                {product.subCategory_id.name}
+                </td>
+                <td className="px-8 py-4">
                   <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 //   onClick={() => editApartment(apartment._id)}
                   >
@@ -170,7 +195,7 @@ const Dashboard = () => {
                   </button>
                 </td>
               </tr>
-              {/* ))} */}
+               ))}
             </tbody>
           </table>
         </div>

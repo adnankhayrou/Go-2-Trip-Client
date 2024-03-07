@@ -3,7 +3,7 @@ import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const AddProduct = () => {
@@ -24,23 +24,25 @@ const AddProduct = () => {
         subCategory_id: '',
         user_id: user_id,
     });
-    console.log(addFormData);
+
+    // console.log(addFormData);
+
     const removeImage = (e,index)=>{
         e.preventDefault();
         const updatedImages = [...addFormData.images];
-    
         updatedImages.splice(index, 1);
         setAddFormData({ ...addFormData, images: updatedImages });
     }
+    
     const handleImageChange = (e) => {
         const images = e.target.files;
-    const files = addFormData.images;
-    const promises = [];
+        const files = addFormData.images;
+        const promises = [];
 
-    for (let i = 0; i < images.length; i++) {
-        const file = images[i];
-        const reader = new FileReader();
-        const promise = new Promise((resolve, reject) => {
+        for (let i = 0; i < images.length; i++) {
+            const file = images[i];
+            const reader = new FileReader();
+            const promise = new Promise((resolve, reject) => {
                 reader.onload = () => {
                     files.push(reader.result);
                     resolve();
@@ -60,7 +62,7 @@ const AddProduct = () => {
 
     const schema = yup.object().shape({
         name: yup.string().required('Product Name is Required'),
-        // images: yup.string().required('Image is Required'),
+        // images: yup.array().required('Image is Required'),
         description: yup.string().required('Description is Required'),
         price: yup.number().required('Price is Required'),
         phone: yup.string().required('Phone number is Required'),
@@ -227,7 +229,7 @@ const AddProduct = () => {
                 </div>
 
                 <div className="mt-4 flex items-center justify-end gap-x-6">
-                    <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+                    <Link to='/dashboard' className="text-sm font-semibold leading-6 text-gray-900">Cancel</Link>
                     <button type="submit" className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                 </div>
 
