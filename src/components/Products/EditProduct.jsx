@@ -14,14 +14,15 @@ const EditProduct = () => {
   const user = JSON.parse(Cookies.get('user') || null);
     const user_id = user._id
     const navigate = useNavigate();
-    const [oldImg, setOldImg] = useState([]);
-   
+    
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
+
+    const [oldImg, setOldImg] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         images: [],
-        oldImages: oldImg,
+        oldImages: [],
         description: '',
         price: '',
         phone: '',
@@ -37,6 +38,21 @@ const EditProduct = () => {
         updatedImages.splice(index, 1);
         setFormData({ ...formData, images: updatedImages });
     }
+
+    const removeOldImage = (e, index) => {
+        e.preventDefault();
+    
+        const updatedImagesFormData = [...formData.oldImages];
+        updatedImagesFormData.splice(index, 1);
+        setFormData(prevState => ({
+            ...prevState,
+            oldImages: updatedImagesFormData 
+        }));
+    
+        const updatedImagesOldImg = [...oldImg]; 
+        updatedImagesOldImg.splice(index, 1);
+        setOldImg(updatedImagesOldImg);
+    };
     
     const handleImageChange = (e) => {
         const images = e.target.files;
@@ -66,7 +82,6 @@ const EditProduct = () => {
 
     const schema = yup.object().shape({
         name: yup.string().required('Product Name is Required'),
-        // images: yup.array().required('Image is Required'),
         description: yup.string().required('Description is Required'),
         price: yup.number().required('Price is Required'),
         phone: yup.string().required('Phone number is Required'),
@@ -103,12 +118,12 @@ const EditProduct = () => {
 
       const fetchData = async () => {
         try {
-  
           const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
           // console.log(response.data);
+          setOldImg(response.data.data.images)
           setFormData({
               name: response.data.data.name,
-              oldImages: oldImg,
+              oldImages: response.data.data.images,
               images: [],
               description: response.data.data.description,
               price: response.data.data.price,
@@ -117,9 +132,7 @@ const EditProduct = () => {
               category_id: response.data.data.category_id,
               subCategory_id: response.data.data.subCategory_id,
               user_id: user_id,
-            });
-            
-            setOldImg(response.data.data.images)
+            });    
         } catch (error) {
           console.error(error);
         }
@@ -127,7 +140,7 @@ const EditProduct = () => {
 
       useEffect(() => {
         fetchData();
-      }, [product_id]);
+      }, []);
 
   return (
     <>
@@ -178,30 +191,26 @@ const EditProduct = () => {
                                 {errors.phone && <span className="text-red-600 text-xs">{errors.phone}</span>}
                             </div>
 
-                            <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'> Old images</div>
-                           <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
-                                {oldImg.map((image,index)=>(
-                                    <>
-                                        <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(http://localhost:3000${image})`}}>
-                                            <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e)=>removeImage(e,index)}>x</button>
-                                        </div>
-                                    
-                                    </>
+                            <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>Old images</div>
+                            <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
+                                {oldImg.map((image, index) => (
+                                    <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(http://localhost:3000${image})`}}>
+                                        <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e) => removeOldImage(e, index)}>x</button>
+                                    </div>
                                 ))}
                             </div>
 
-                            {formData.images.length > 0 && (<div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>New images</div>)}
+                            {formData.images.length > 0 && (
+                                <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>New images</div>
+                            )}
                             <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
-                                {formData.images.map((image,index)=>(
-                                    <>
-                                        <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${image})`}}>
-                                            <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e)=>removeImage(e,index)}>x</button>
-                                        </div>
-                                    
-                                    </>
+                                {formData.images.map((image, index) => (
+                                    <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${image})`}}>
+                                        <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e) => removeImage(e, index)}>x</button>
+                                    </div>
                                 ))}
                             </div>
-                            
+
                             <div className="sm:col-span-6">
                             <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-90 h-24 border-2 border-gray-100 border-dashed rounded-lg cursor-pointer  dark:border-gray-500 dark:hover:border-gray-500 dark:hover:bg-gray-300">
                                 <div className="flex flex-col items-center justify-center pt-3 pb-4">
