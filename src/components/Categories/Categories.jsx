@@ -5,13 +5,14 @@ import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Statistics from '../Dashboard/Statistics';
-import Cookies from 'js-cookie';
 import * as yup from 'yup';
 
 const Categories = () => {
     const navigate = useNavigate();
   
     const [loading, setLoading] = useState(false);
+    const [categoryId, setCategoryId] = useState();
+    const [editForm, setEditForm] = useState(false);
     const [categories, setCategory] = useState([]);
     const [refetch, setRefetch] = useState(true)
     const [errors, setErrors] = useState({});
@@ -23,6 +24,38 @@ const Categories = () => {
     const schema = yup.object().shape({
         name: yup.string().required('Category Name is Required'),
     });
+
+    async function handleEditSubmit(e, id) {
+      console.log(id);
+        e.preventDefault();
+        try {
+          await schema.validate(addFormData, { abortEarly: false });
+          const requestData = { ...addFormData };
+    
+          axios.post(`http://localhost:3000/api/category/updateCategory/${id}`, requestData)
+            .then(result => {
+              const msg = result.data.success;
+              sweetalert.fire('Success!', `${msg}`, 'success');
+              navigate('/category')
+              setRefetch(!refetch);
+              setAddFormData({
+                name: ''
+              });
+              setEditForm(false)
+            })
+            .catch(err => {
+              const errorMsg = err.response ? err.response.data.error : 'An error occurred in add apartment';
+              console.log(errorMsg);
+              setError(errorMsg);
+            });
+        } catch (validationError) {
+          const fieldErrors = {};
+          validationError.inner.forEach(err => {
+            fieldErrors[err.path] = err.message;
+          });
+          setErrors(fieldErrors);
+        }
+      };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -93,8 +126,12 @@ const Categories = () => {
       }
     };
 
-    const editCategory = (id) => {
-        // navigate('/editProduct', { state: { productId: id }});
+    const editCategory = (item) => {
+        setEditForm(true)
+        setCategoryId(item._id)
+        setAddFormData({
+          name: item.name
+        });
     }
   
     useEffect(() => {
@@ -106,9 +143,33 @@ const Categories = () => {
     <NavBar/>
     <SideBar/>
     <Statistics/>
-
-     {/* add button */}
-      <div className="sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ">
+    
+    
+     {/* edit form */}
+     <div className={`sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ${editForm == false ? 'hidden' : ''}`}>
+        <div className=" rounded-lg">
+            <form onSubmit={(e) => handleEditSubmit(e, categoryId)}>
+                {errors.name && <div className="text-red-600 text-xs pe-28 text-end">{errors.name}</div>}
+                <div className='flex justify-end'>
+                    <input 
+                    value={addFormData.name}
+                    onChange={(e) => setAddFormData({ ...addFormData, name: e.target.value })}
+                    type="text" className='p-1 me-2 rounded border border-gray'/>
+                    <button className="shadow-2xl block text-white font-medium rounded-lg text-sm p-1.5 flex items-center text-center dark:bg-black " >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span className=''>
+                            Save
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+      </div>
+     
+     {/* add form */}
+      <div className={`sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ${editForm == false ? '' : 'hidden'}`}>
         <div className=" rounded-lg">
             <form onSubmit={handleSubmit}>
                 {errors.name && <div className="text-red-600 text-xs pe-28 text-end">{errors.name}</div>}
@@ -129,6 +190,7 @@ const Categories = () => {
             </form>
         </div>
       </div>
+    
         {/* single table */}
       {loading ? (
         <div className="sm:ml-64 pt-2">
@@ -197,15 +259,29 @@ const Categories = () => {
                   {category.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  12/34/1222
+                  {new Date(category.created_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  12/34/1222
+                  {new Date(category.updated_at).toLocaleString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })}
                 </td>
                 
                 <td className="px-9 py-4">
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  onClick={() => editCategory(category._id)}
+                  onClick={() => editCategory(category)}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-600">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />

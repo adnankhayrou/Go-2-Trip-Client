@@ -178,7 +178,7 @@ const AddProduct = () => {
                                     value={addFormData.category_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, category_id: e.target.value })}
                                       autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a536d4fd17c17fb51194a4'>United States</option>
+                                    <option value='65eaf3e606dac44ea7da60a8'>United States</option>
                                     
                                     </select>
                                 </div>

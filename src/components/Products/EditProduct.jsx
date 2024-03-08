@@ -232,11 +232,10 @@ const EditProduct = () => {
                                 <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Category</label>
                                 <div className="">
                                     <select
-                                    value={formData.category_id}
-                                    onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-                                      autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a536d4fd17c17fb51194a4'>United States</option>
-                                    
+                                        value={formData.category_id}
+                                        onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                                        autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                        <option value='65eaf3e606dac44ea7da60a8'>United States</option>
                                     </select>
                                 </div>
                                 {errors.category_id && <span className="text-red-600 text-xs">Category is Required</span>}
