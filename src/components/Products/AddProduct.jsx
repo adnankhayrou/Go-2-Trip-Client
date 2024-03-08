@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
@@ -13,6 +13,10 @@ const AddProduct = () => {
    
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
+    const [categories, setCategory] = useState([]);
+    const [subCategories, setSubCategory] = useState([]);
+    const [cities, setCity] = useState([]);
+    // console.log(categories);
     const [addFormData, setAddFormData] = useState({
         name: '',
         images: [],
@@ -24,8 +28,6 @@ const AddProduct = () => {
         subCategory_id: '',
         user_id: user_id,
     });
-
-    // console.log(addFormData);
 
     const removeImage = (e,index)=>{
         e.preventDefault();
@@ -95,7 +97,24 @@ const AddProduct = () => {
           });
           setErrors(fieldErrors);
         }
-      };
+    };
+
+    const fetchCategories = async () => {
+    try {
+        const categories = await axios.get('http://localhost:3000/api/category/getCategories');
+        setCategory(categories.data.data);
+        const subCategory = await axios.get('http://localhost:3000/api/subCategory/getSubCategories');
+        setSubCategory(subCategory.data.data);
+        const cities = await axios.get('http://localhost:3000/api/city/getCities');
+        setCity(cities.data.data);
+    } catch (error) {
+        console.error(error);
+    }
+    };
+
+    useEffect(() => {
+       fetchCategories();
+    }, []);
 
   return (
     <>
@@ -178,8 +197,10 @@ const AddProduct = () => {
                                     value={addFormData.category_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, category_id: e.target.value })}
                                       autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65eaf3e606dac44ea7da60a8'>United States</option>
-                                    
+                                     <option>select your category</option>
+                                    {categories.map((category, index)=>(
+                                        <option key={index} value={category._id}>{category.name}</option>
+                                    ))}
                                     </select>
                                 </div>
                                 {errors.category_id && <span className="text-red-600 text-xs">Category is Required</span>}
@@ -192,7 +213,10 @@ const AddProduct = () => {
                                     value={addFormData.subCategory_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, subCategory_id: e.target.value })}
                                      id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a54ec9297c2563629c13e7'>United States</option>
+                                    <option>select your Subcategory</option>
+                                    {subCategories.map((SubCategory, index)=>(
+                                        <option key={index} value={SubCategory._id}>{SubCategory.name}</option>
+                                    ))}
                                     
                                     </select>
                                 </div>
@@ -206,7 +230,10 @@ const AddProduct = () => {
                                     value={addFormData.city_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, city_id: e.target.value })}
                                      id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a53fdb10f560e5ec524892'>United States</option>
+                                    <option>select your city</option>
+                                    {cities.map((city, index)=>(
+                                        <option key={index} value={city._id}>{city.name}</option>
+                                    ))}
                                     
                                     </select>
                                 </div>
