@@ -7,14 +7,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const EditProduct = () => {
-  const location = useLocation();
-  let product_id = location.state.productId;
-//   console.log(product_id);
+    const location = useLocation();
+    let product_id = location.state.productId;
 
-  const user = JSON.parse(Cookies.get('user') || null);
+    const user = JSON.parse(Cookies.get('user') || null);
     const user_id = user._id
     const navigate = useNavigate();
-    
+
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
 
@@ -41,19 +40,19 @@ const EditProduct = () => {
 
     const removeOldImage = (e, index) => {
         e.preventDefault();
-    
+
         const updatedImagesFormData = [...formData.oldImages];
         updatedImagesFormData.splice(index, 1);
         setFormData(prevState => ({
             ...prevState,
             oldImages: updatedImagesFormData 
         }));
-    
+
         const updatedImagesOldImg = [...oldImg]; 
         updatedImagesOldImg.splice(index, 1);
         setOldImg(updatedImagesOldImg);
     };
-    
+
     const handleImageChange = (e) => {
         const images = e.target.files;
         const files = formData.images;
@@ -93,60 +92,60 @@ const EditProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          await schema.validate(formData, { abortEarly: false });
-          const requestData = { ...formData };
-    
-          axios.post(`http://localhost:3000/api/product/updateProduct/${product_id}`, requestData)
+            await schema.validate(formData, { abortEarly: false });
+            const requestData = { ...formData };
+
+            axios.post(`http://localhost:3000/api/product/updateProduct/${product_id}`, requestData)
             .then(result => {
-              const msg = result.data.success;
-              sweetalert.fire('Success!', `${msg}`, 'success');
-              navigate('/dashboard')
+                const msg = result.data.success;
+                sweetalert.fire('Success!', `${msg}`, 'success');
+                navigate('/dashboard')
             })
             .catch(err => {
-              const errorMsg = err.response ? err.response.data.error : 'An error occurred in update product';
-              console.log(errorMsg);
-              setError(errorMsg);
+                const errorMsg = err.response ? err.response.data.error : 'An error occurred in update product';
+                console.log(errorMsg);
+                setError(errorMsg);
             });
         } catch (validationError) {
-          const fieldErrors = {};
-          validationError.inner.forEach(err => {
+            const fieldErrors = {};
+            validationError.inner.forEach(err => {
             fieldErrors[err.path] = err.message;
-          });
-          setErrors(fieldErrors);
+            });
+            setErrors(fieldErrors);
         }
-      };
+    };
 
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
-          // console.log(response.data);
-          setOldImg(response.data.data.images)
-          setFormData({
-              name: response.data.data.name,
-              oldImages: response.data.data.images,
-              images: [],
-              description: response.data.data.description,
-              price: response.data.data.price,
-              phone: response.data.data.phone,
-              city_id: response.data.data.city_id,
-              category_id: response.data.data.category_id,
-              subCategory_id: response.data.data.subCategory_id,
-              user_id: user_id,
-            });    
-        } catch (error) {
-          console.error(error);
-        }
-      };
+    const fetchData = async () => {
+    try {
+        const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
+        // console.log(response.data);
+        setOldImg(response.data.data.images)
+        setFormData({
+            name: response.data.data.name,
+            oldImages: response.data.data.images,
+            images: [],
+            description: response.data.data.description,
+            price: response.data.data.price,
+            phone: response.data.data.phone,
+            city_id: response.data.data.city_id,
+            category_id: response.data.data.category_id,
+            subCategory_id: response.data.data.subCategory_id,
+            user_id: user_id,
+        });    
+    } catch (error) {
+        console.error(error);
+    }
+    };
 
-      useEffect(() => {
-        fetchData();
-      }, []);
+    useEffect(() => {
+    fetchData();
+    }, []);
 
   return (
     <>
     <NavBar/>
 
-     {/* add modal */}
+    {/* add modal */}
     <div className="justify-center items-center flex pt-20 overflow-x-hidden overflow-y-hidden inset-0 z-50 outline-none focus:outline-none">
         <div className=" sm:w-full w-max my-6 mx-auto max-w-3xl">
             <form onSubmit={handleSubmit}>
@@ -191,7 +190,9 @@ const EditProduct = () => {
                                 {errors.phone && <span className="text-red-600 text-xs">{errors.phone}</span>}
                             </div>
 
-                            <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>Old images</div>
+                            {oldImg.length > 0 && (
+                                <div className='text-sm font-semibold border ps-1 p-1 rounded-md bg-black text-white flex justify-center'>Old images</div>
+                             )}
                             <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
                                 {oldImg.map((image, index) => (
                                     <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(http://localhost:3000${image})`}}>
@@ -224,7 +225,7 @@ const EditProduct = () => {
                                 onChange={handleImageChange}
                                  id="dropzone-file" type="file" className="hidden" multiple/>
                             </label>
-                            {errors.images && <span className="text-red-600 text-xs">Image is Required</span>}
+                            {errors.oldImages && <span className="text-red-600 text-xs">Image is Required</span>}
                             </div>
 
                             <div className="sm:col-span-2 sm:col-start-1">
@@ -278,7 +279,7 @@ const EditProduct = () => {
                                     id="about" name="about" rows="2" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"></textarea>
                                 </div>
                                 {errors.description && <span className="text-red-600 text-xs">{errors.description}</span>}
-                                <p className="mt-2 text-sm leading-6 text-gray-600">Write a few.</p>
+                                <p className="mt-2 text-sm leading-6 text-gray-600">Write a few think about your product.</p>
                             </div>
                         </div>
                     </div>   

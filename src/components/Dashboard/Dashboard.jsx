@@ -108,7 +108,7 @@ const Dashboard = () => {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
-                <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
+                <th scope="col" className="text-yellow-600 px-4 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
                   Products details
                 </th>
                 <th scope="col" className="bg-gray-100">
@@ -175,25 +175,25 @@ const Dashboard = () => {
               {products.map((product, index) => (
               <tr key={index}  className="odd:bg-white odd:dark:bg-white-200 even:bg-white even:dark:bg-white-200">
                 <td className="px-6 py-4">
-                  <img src={`http://localhost:3000${product.images[0]}`} alt="" className='h-8 w-14 rounded'/>
+                  <img src={`http://localhost:3000${product.images[0]}`} alt="" className='h-9 w-12 rounded'/>
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                   {product.name}
                 </td>
-                <td className="px-8 py-4">
-                {product.price}DH
+                <td className="px-6 py-4">
+                  {product.price}DH
+                </td>
+                <td className="px-6 py-4">
+                  {product.city_id.name}
                 </td>
                 <td className="px-8 py-4">
-                {product.city_id.name}
+                  {product.phone}
                 </td>
                 <td className="px-8 py-4">
-                {product.phone}
+                  {product.category_id.name}
                 </td>
                 <td className="px-8 py-4">
-                {product.category_id.name}
-                </td>
-                <td className="px-8 py-4">
-                {product.subCategory_id.name}
+                  {product.subCategory_id.name}
                 </td>
                 <td className="px-8 py-4">
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
