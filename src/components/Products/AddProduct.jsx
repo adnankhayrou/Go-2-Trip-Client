@@ -103,8 +103,16 @@ const AddProduct = () => {
     try {
         const categories = await axios.get('http://localhost:3000/api/category/getCategories');
         setCategory(categories.data.data);
-        const subCategory = await axios.get('http://localhost:3000/api/subCategory/getSubCategories');
-        setSubCategory(subCategory.data.data);
+
+        // console.log(addFormData.category_id );
+        if (addFormData.category_id && addFormData.category_id !== 'select your category') {
+            const subCategoryResponse = await axios.get(`http://localhost:3000/api/subCategory/getSubCategories/${addFormData.category_id}`);
+            setSubCategory(subCategoryResponse.data.data);
+        }
+        else {
+            setSubCategory([]);
+        }
+
         const cities = await axios.get('http://localhost:3000/api/city/getCities');
         setCity(cities.data.data);
     } catch (error) {
@@ -114,7 +122,7 @@ const AddProduct = () => {
 
     useEffect(() => {
        fetchCategories();
-    }, []);
+    }, [addFormData.category_id]);
 
   return (
     <>
@@ -212,7 +220,9 @@ const AddProduct = () => {
                                     <select
                                     value={addFormData.subCategory_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, subCategory_id: e.target.value })}
-                                     id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                     id="country" name="country" autoComplete="country-name" 
+                                     disabled={subCategories.length === 0}
+                                     className=" block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
                                     <option>select your Subcategory</option>
                                     {subCategories.map((SubCategory, index)=>(
                                         <option key={index} value={SubCategory._id}>{SubCategory.name}</option>
@@ -230,7 +240,7 @@ const AddProduct = () => {
                                     value={addFormData.city_id}
                                     onChange={(e) => setAddFormData({ ...addFormData, city_id: e.target.value })}
                                      id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option>select your city</option>
+                                    <option >select your city</option>
                                     {cities.map((city, index)=>(
                                         <option key={index} value={city._id}>{city.name}</option>
                                     ))}
