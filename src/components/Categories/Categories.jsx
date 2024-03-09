@@ -317,7 +317,7 @@ const Categories = () => {
       </>
       ))}
 
-    <SubCategories/>
+    <SubCategories categories={categories}/>
     </>
 
   )
