@@ -5,16 +5,16 @@ import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Statistics from '../Dashboard/Statistics';
-import SubCategories from '../SubCategories/SubCategories';
 import * as yup from 'yup';
 
-const Categories = () => {
+
+const Cities = () => {
     const navigate = useNavigate();
   
     const [loading, setLoading] = useState(false);
-    const [categoryId, setCategoryId] = useState();
+    const [cityId, setCityId] = useState();
     const [editForm, setEditForm] = useState(false);
-    const [categories, setCategory] = useState([]);
+    const [cities, setCity] = useState([]);
     const [refetch, setRefetch] = useState(true)
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
@@ -33,11 +33,11 @@ const Categories = () => {
           await schema.validate(addFormData, { abortEarly: false });
           const requestData = { ...addFormData };
     
-          axios.post(`http://localhost:3000/api/category/updateCategory/${id}`, requestData)
+          axios.post(`http://localhost:3000/api/city/updateCity/${id}`, requestData)
             .then(result => {
               const msg = result.data.success;
               sweetalert.fire('Success!', `${msg}`, 'success');
-              navigate('/category')
+              navigate('/city')
               setRefetch(!refetch);
               setAddFormData({
                 name: ''
@@ -64,11 +64,11 @@ const Categories = () => {
           await schema.validate(addFormData, { abortEarly: false });
           const requestData = { ...addFormData };
     
-          axios.post('http://localhost:3000/api/category/createCategory', requestData)
+          axios.post('http://localhost:3000/api/city/createCity', requestData)
             .then(result => {
               const msg = result.data.success;
               sweetalert.fire('Success!', `${msg}`, 'success');
-              navigate('/category')
+              navigate('/city')
               setRefetch(!refetch);
               setAddFormData({
                 name: ''
@@ -91,9 +91,9 @@ const Categories = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/api/category/getCategories`);
+        const response = await axios.get(`http://localhost:3000/api/city/getCities`);
         // console.log(response.data.data);
-        setCategory(response.data.data);
+        setCity(response.data.data);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -101,7 +101,7 @@ const Categories = () => {
       }
     };
   
-    const deleteCategory = async (id) => {
+    const deleteCity = async (id) => {
       const result = await new Promise((resolve) => {
         sweetalert.fire({
           title: 'Are you sure?',
@@ -118,34 +118,35 @@ const Categories = () => {
     
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:3000/api/category/deleteCategory/${id}`);
+          await axios.delete(`http://localhost:3000/api/city/deleteCity/${id}`);
           setRefetch(!refetch);
-          sweetalert.fire('Deleted!', 'Category has been deleted.', 'success');
+          sweetalert.fire('Deleted!', 'City has been deleted.', 'success');
         } catch (error) {
           console.log(error);
         }
       }
     };
 
-    const editCategory = (item) => {
+    const editCity = (item) => {
         setEditForm(true)
-        setCategoryId(item._id)
+        setCityId(item._id)
         setAddFormData({
           name: item.name
         });
     }
 
-    const cancelEditCategory = (e) => {
-      e.preventDefault();
-        setEditForm(false)
-        setAddFormData({
-          name: ''
-        });
-    }
+    const cancelEditCity = (e) => {
+        e.preventDefault();
+          setEditForm(false)
+          setAddFormData({
+            name: ''
+          });
+      }
   
     useEffect(() => {
       fetchData();
     }, [refetch]);
+
 
   return (
     <>
@@ -153,10 +154,11 @@ const Categories = () => {
     <SideBar/>
     <Statistics/>
     
+    
      {/* edit form */}
      <div className={`sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ${editForm == false ? 'hidden' : ''}`}>
         <div className=" rounded-lg">
-            <form onSubmit={(e) => handleEditSubmit(e, categoryId)}>
+            <form onSubmit={(e) => handleEditSubmit(e, cityId)}>
                 {errors.name && <div className="text-red-600 text-xs pe-28 text-end">{errors.name}</div>}
                 <div className='flex justify-end'>
                     <input 
@@ -171,7 +173,7 @@ const Categories = () => {
                             Save
                         </span>
                     </button>
-                    <button onClick={cancelEditCategory} className="block text-gray font-medium text-sm p-1.5 flex items-center text-center " >
+                    <button onClick={cancelEditCity} className="block text-gray font-medium text-sm p-1.5 flex items-center text-center " >
                             Cancel
                     </button>
                 </div>
@@ -220,7 +222,7 @@ const Categories = () => {
       ) : (
         loading ? (
           <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
-            <p className="fs-3">You Have No Categories For This Moment!</p>
+            <p className="fs-3">You Have No Cities For This Moment!</p>
           </div>
         ) : (
           <>
@@ -232,13 +234,13 @@ const Categories = () => {
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
                 <th scope="col" className="text-yellow-600 px-3 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
-                  Categories
+                  Cities
                 </th>
               </tr>
               <tr>
             
                 <th scope="col" className="ps-6 py-3">
-                # {categories.length}
+                # {cities.length}
                 </th>
                 <th scope="col" className="px-6 py-3">
                 name
@@ -260,17 +262,17 @@ const Categories = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.map((category, index) => (
+              {cities.map((city, index) => (
               <tr key={index}  className="odd:bg-white odd:dark:bg-white-200 even:bg-white even:dark:bg-white-200">
                
                 <td scope="row" className="ps-6 py-4 font-medium whitespace-nowrap">
                   {index+1}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {category.name}
+                  {city.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(category.created_at).toLocaleString("en-US", {
+                  {new Date(city.created_at).toLocaleString("en-US", {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",
@@ -280,7 +282,7 @@ const Categories = () => {
                 })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(category.updated_at).toLocaleString("en-US", {
+                  {new Date(city.updated_at).toLocaleString("en-US", {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",
@@ -292,7 +294,7 @@ const Categories = () => {
                 
                 <td className="px-9 py-4">
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  onClick={() => editCategory(category)}
+                  onClick={() => editCity(city)}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-600">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -301,7 +303,7 @@ const Categories = () => {
                 </td>
                 <td className="px-9 py-4">
                   <button 
-                  onClick={() => deleteCategory(category._id)} 
+                  onClick={() => deleteCity(city._id)} 
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-red-600">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -317,10 +319,8 @@ const Categories = () => {
       </>
       ))}
 
-    <SubCategories/>
     </>
-
   )
 }
 
-export default Categories
+export default Cities
