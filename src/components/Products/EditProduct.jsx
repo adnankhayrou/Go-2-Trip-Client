@@ -16,7 +16,9 @@ const EditProduct = () => {
 
     const [errors, setErrors] = useState({});
     const [error, setError] = useState(null);
-
+    const [categories, setCategory] = useState([]);
+    const [subCategories, setSubCategory] = useState([]);
+    const [cities, setCity] = useState([]);
     const [oldImg, setOldImg] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
@@ -127,9 +129,9 @@ const EditProduct = () => {
             description: response.data.data.description,
             price: response.data.data.price,
             phone: response.data.data.phone,
-            city_id: response.data.data.city_id,
-            category_id: response.data.data.category_id,
-            subCategory_id: response.data.data.subCategory_id,
+            city_id: response.data.data.city_id._id,
+            category_id: response.data.data.category_id._id,
+            subCategory_id: response.data.data.subCategory_id._id,
             user_id: user_id,
         });    
     } catch (error) {
@@ -137,9 +139,34 @@ const EditProduct = () => {
     }
     };
 
-    useEffect(() => {
-    fetchData();
-    }, []);
+    const fetchCategories = async () => {
+        try {
+            const categories = await axios.get('http://localhost:3000/api/category/getCategories');
+            setCategory(categories.data.data);
+    
+            // console.log(addFormData.category_id );
+            if (formData.category_id && formData.category_id !== 'select your category') {
+                const subCategoryResponse = await axios.get(`http://localhost:3000/api/subCategory/getSubCategories/${formData.category_id}`);
+                setSubCategory(subCategoryResponse.data.data);
+            }
+            else {
+                setSubCategory([]);
+            }
+    
+            const cities = await axios.get('http://localhost:3000/api/city/getCities');
+            setCity(cities.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+        };
+
+        useEffect(() => {
+            fetchData();
+        }, []); 
+        
+        useEffect(() => {
+            fetchCategories();
+        }, [formData]);
 
   return (
     <>
@@ -232,10 +259,13 @@ const EditProduct = () => {
                                 <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">Category</label>
                                 <div className="">
                                     <select
-                                        value={formData.category_id}
-                                        onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-                                        autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                        <option value='65eaf3e606dac44ea7da60a8'>United States</option>
+                                    value={formData.category_id}
+                                    onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
+                                      autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                     <option>select your category</option>
+                                    {categories.map((category, index)=>(
+                                        <option key={index} value={category._id}>{category.name}</option>
+                                    ))}
                                     </select>
                                 </div>
                                 {errors.category_id && <span className="text-red-600 text-xs">Category is Required</span>}
@@ -247,8 +277,13 @@ const EditProduct = () => {
                                     <select
                                     value={formData.subCategory_id}
                                     onChange={(e) => setFormData({ ...formData, subCategory_id: e.target.value })}
-                                     id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a54ec9297c2563629c13e7'>United States</option>
+                                     id="country" name="country" autoComplete="country-name" 
+                                     disabled={subCategories.length === 0}
+                                     className=" block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
+                                    <option>select your Subcategory</option>
+                                    {subCategories.map((SubCategory, index)=>(
+                                        <option key={index} value={SubCategory._id}>{SubCategory.name}</option>
+                                    ))}
                                     
                                     </select>
                                 </div>
@@ -262,7 +297,10 @@ const EditProduct = () => {
                                     value={formData.city_id}
                                     onChange={(e) => setFormData({ ...formData, city_id: e.target.value })}
                                      id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm sm:leading-6">
-                                    <option value='65a53fdb10f560e5ec524892'>United States</option>
+                                    <option >select your city</option>
+                                    {cities.map((city, index)=>(
+                                        <option key={index} value={city._id}>{city.name}</option>
+                                    ))}
                                     
                                     </select>
                                 </div>

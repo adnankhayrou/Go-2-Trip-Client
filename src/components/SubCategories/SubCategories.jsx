@@ -93,7 +93,6 @@ const SubCategories = ({ categories }) => {
       try {
         setLoading(true);
         const response = await axios.get(`http://localhost:3000/api/subCategory/getAllSubCategories`);
-        // console.log(response.data.data);
         setSubCategory(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -132,7 +131,7 @@ const SubCategories = ({ categories }) => {
         setEditForm(true)
         setSubCategoryId(item._id)
         setAddFormData({
-          category_id: item.category_id,
+          category_id: item.category_id._id,
           name: item.name
         });
     }
@@ -153,7 +152,7 @@ const SubCategories = ({ categories }) => {
     <>
     
      {/* edit form */}
-     <div className={`sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 ${editForm == false ? 'hidden' : ''}`}>
+     <div className={`sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 mt-8 ${editForm == false ? 'hidden' : ''}`}>
         <div className=" rounded-lg">
             <form onSubmit={(e) => handleEditSubmit(e, subCategoryId)}>
             <div className='flex justify-end sm:pe-32'>
@@ -278,6 +277,10 @@ const SubCategories = ({ categories }) => {
                 <th scope="col" className="px-6 py-3">
                 name
                 </th>
+
+                <th scope="col" className="px-6 py-3">
+                Category
+                </th>
                 <th scope="col" className="px-6 py-3">
                 Created_at
                 </th>
@@ -303,6 +306,9 @@ const SubCategories = ({ categories }) => {
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                   {subCategory.name}
+                </td>
+                <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
+                  {subCategory.category_id.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                   {new Date(subCategory.created_at).toLocaleString("en-US", {
