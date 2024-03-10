@@ -13,6 +13,7 @@ import Categories from '../Categories/Categories'
 import Cities from '../Cities/Cities'
 import AllComments from '../Comment/AllComments'
 import AllUsers from '../Users/AllUsers'
+import AllProducts from '../Products/AllProducts'
 
 // eslint-disable-next-line react/prop-types
 const LogoutMiddleware = ({ children }) => {
@@ -46,6 +47,7 @@ function App() {
       <Routes>
         <Route path='/' element={ <Home /> } />
         <Route path='/dashboard' element={<LogoutMiddleware> <Dashboard /> </LogoutMiddleware>} />
+        <Route path='/allProducts' element={<LogoutMiddleware> <AllProducts /> </LogoutMiddleware>} />
         <Route path='/addProduct' element={<LogoutMiddleware> <AddProduct /> </LogoutMiddleware>} />
         <Route path='/editProduct' element={<LogoutMiddleware> <EditProduct /> </LogoutMiddleware>} />
         <Route path='/category' element={<LogoutMiddleware> <Categories /> </LogoutMiddleware>} />
