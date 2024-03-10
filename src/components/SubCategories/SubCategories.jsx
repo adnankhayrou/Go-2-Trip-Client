@@ -147,7 +147,7 @@ const SubCategories = ({ categories }) => {
   
     useEffect(() => {
       fetchData();
-    }, [refetch]);
+    }, [refetch, categories]);
   return (
     <>
     

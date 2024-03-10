@@ -78,7 +78,7 @@ const AddProduct = () => {
         try {
           await schema.validate(addFormData, { abortEarly: false });
           const requestData = { ...addFormData };
-    
+            console.log(requestData);
           axios.post('http://localhost:3000/api/product/createProduct', requestData)
             .then(result => {
               const msg = result.data.success;
