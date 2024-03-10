@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import {DataContext} from '../Context/DataProvider';
 
 const Statistics = () => {
+    const { statistics, adminProducts, fetchData} = useContext(DataContext);
+    
+    useEffect(() => {
+        fetchData();
+    },[]);
+
   return (
     <div className="sm:ml-64 sm:pt-10">
 
@@ -21,7 +28,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold ">
-                <span>6</span>
+                <span>{adminProducts.length}</span>
             </h2>
             </div>
         </div>
@@ -42,7 +49,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold">
-                <span>6</span>
+                <span>{statistics.products.length}</span>
             </h2>
             </div>
         </div>
@@ -63,7 +70,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold">
-                <span>6</span>
+                <span>{statistics.categories.length}</span>
             </h2>
             </div>
         </div>
@@ -84,7 +91,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold">
-                <span>6</span>
+                <span>{statistics.comments.length}</span>
             </h2>
             </div>
         </div>
@@ -105,7 +112,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold">
-                <span>6</span>
+                <span>{statistics.users.length}</span>
             </h2>
             </div>
         </div>
@@ -126,7 +133,7 @@ const Statistics = () => {
                 </p>
             </div>
             <h2 className="text-xl font-bold">
-                <span>6</span>
+                <span>{statistics.cities.length}</span>
             </h2>
             </div>
         </div>
