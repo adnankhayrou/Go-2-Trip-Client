@@ -11,6 +11,7 @@ import AddProduct from '../Products/AddProduct'
 import EditProduct from '../Products/EditProduct'
 import Categories from '../Categories/Categories'
 import Cities from '../Cities/Cities'
+import AllComments from '../Comment/AllComments'
 
 // eslint-disable-next-line react/prop-types
 const LogoutMiddleware = ({ children }) => {
@@ -47,6 +48,7 @@ function App() {
         <Route path='/addProduct' element={<LogoutMiddleware> <AddProduct /> </LogoutMiddleware>} />
         <Route path='/editProduct' element={<LogoutMiddleware> <EditProduct /> </LogoutMiddleware>} />
         <Route path='/category' element={<LogoutMiddleware> <Categories /> </LogoutMiddleware>} />
+        <Route path='/allComments' element={<LogoutMiddleware> <AllComments /> </LogoutMiddleware>} />
         <Route path='/city' element={<LogoutMiddleware> <Cities /> </LogoutMiddleware>} />
         <Route path='/register' element={<LoginMiddleware> <Register /> </LoginMiddleware>} />
         <Route path='/login' element={<LoginMiddleware> <Login /> </LoginMiddleware>} />
