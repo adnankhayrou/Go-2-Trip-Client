@@ -5,6 +5,7 @@ import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Statistics from '../Dashboard/Statistics';
+import { formatDistanceToNow } from "date-fns";
 import * as yup from 'yup';
 
 
@@ -272,24 +273,14 @@ const Cities = () => {
                   {city.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(city.created_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(city.created_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(city.updated_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(city.updated_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 
                 <td className="px-9 py-4">

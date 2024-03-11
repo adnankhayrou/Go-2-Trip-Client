@@ -4,6 +4,7 @@ import SideBar from '../Layouts/SideBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import Statistics from '../Dashboard/Statistics';
+import { formatDistanceToNow } from "date-fns";
 
 const AllUsers = () => {
     const [loading, setLoading] = useState(false);
@@ -175,24 +176,14 @@ const AllUsers = () => {
                   {user.role}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(user.date).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(user.date), {
+                    addSuffix: true,
+                  })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(user.date).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(user.date), {
+                    addSuffix: true,
+                  })}
                 </td>
                 
                 <td className="px-9 py-4">

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { formatDistanceToNow } from "date-fns";
 import * as yup from 'yup';
 
 const SubCategories = ({ categories }) => {
@@ -13,7 +14,6 @@ const SubCategories = ({ categories }) => {
     const [subCategories, setSubCategory] = useState([]);
     const [refetch, setRefetch] = useState(true)
     const [errors, setErrors] = useState({});
-    const [error, setError] = useState(null);
     const [addFormData, setAddFormData] = useState({
         category_id:'',
         name: '',
@@ -25,7 +25,6 @@ const SubCategories = ({ categories }) => {
     });
 
     async function handleEditSubmit(e, id) {
-    //   console.log(id);
         e.preventDefault();
         try {
           await schema.validate(addFormData, { abortEarly: false });
@@ -47,7 +46,6 @@ const SubCategories = ({ categories }) => {
             .catch(err => {
               const errorMsg = err.response ? err.response.data.error : 'An error occurred in add apartment';
               console.log(errorMsg);
-              setError(errorMsg);
             });
         } catch (validationError) {
           const fieldErrors = {};
@@ -78,7 +76,6 @@ const SubCategories = ({ categories }) => {
             .catch(err => {
               const errorMsg = err.response ? err.response.data.error : 'An error occurred in add apartment';
               console.log(errorMsg);
-              setError(errorMsg);
             });
         } catch (validationError) {
           const fieldErrors = {};
@@ -148,6 +145,7 @@ const SubCategories = ({ categories }) => {
     useEffect(() => {
       fetchData();
     }, [refetch, categories]);
+
   return (
     <>
     
@@ -311,24 +309,14 @@ const SubCategories = ({ categories }) => {
                   {subCategory.category_id.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(subCategory.created_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(subCategory.created_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(subCategory.updated_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(subCategory.updated_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 
                 <td className="px-9 py-4">

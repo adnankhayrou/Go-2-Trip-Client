@@ -6,6 +6,7 @@ import sweetalert from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Statistics from '../Dashboard/Statistics';
 import SubCategories from '../SubCategories/SubCategories';
+import { formatDistanceToNow } from "date-fns";
 import * as yup from 'yup';
 
 const Categories = () => {
@@ -270,24 +271,14 @@ const Categories = () => {
                   {category.name}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(category.created_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                  {formatDistanceToNow(new Date(category.created_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                  {new Date(category.updated_at).toLocaleString("en-US", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                })}
+                {formatDistanceToNow(new Date(category.updated_at), {
+                    addSuffix: true,
+                  })}
                 </td>
                 
                 <td className="px-9 py-4">

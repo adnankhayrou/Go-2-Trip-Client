@@ -5,7 +5,7 @@ const DataContext = React.createContext();
 
 function DataProvider({ children }) {
     const user = JSON.parse(Cookies.get('user') || null);
-    const user_id = user._id
+    // const user_id = user._id
     
     // const [favorites, setFavorites] = useState([]);
     const [statistics, setStatistics] = useState({ products: [], categories: [], cities: [], users: [], comments: [] });
@@ -14,7 +14,7 @@ function DataProvider({ children }) {
     const fetchData = async () => { 
         try {
           const response = await axios.get(`http://localhost:3000/api/statistics/AllStatistics`);
-          const adminProduct = await axios.get(`http://localhost:3000/api/product/userProducts/${user_id}`);
+          const adminProduct = await axios.get(`http://localhost:3000/api/product/userProducts/${user?._id}`);
           setStatistics(response.data)
           setAdminProducts(adminProduct.data.data)
         } catch (error) {
