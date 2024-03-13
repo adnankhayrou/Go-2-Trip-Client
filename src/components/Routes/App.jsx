@@ -15,8 +15,21 @@ import AllComments from '../Comment/AllComments'
 import AllUsers from '../Users/AllUsers'
 import AllProducts from '../Products/AllProducts'
 import ProductDetails from '../Products/ProductDetails'
+import AllItems from '../Items/AllItems'
 
-// eslint-disable-next-line react/prop-types
+const AdminMiddleware = ({ children }) => {
+  const isAuthenticated = !!Cookies.get('jwtToken'); 
+  const user = JSON.parse(Cookies.get('user') || null);
+
+  if (isAuthenticated && user.role == "Admin") {
+    return children;
+  } 
+
+  return (
+    <Navigate to="/login" />
+  )
+}
+
 const LogoutMiddleware = ({ children }) => {
   const isAuthenticated = !!Cookies.get('jwtToken'); 
 
@@ -29,7 +42,6 @@ const LogoutMiddleware = ({ children }) => {
   )
 }
 
-// eslint-disable-next-line react/prop-types
 const LoginMiddleware = ({ children }) => {
   const isAuthenticated = !!Cookies.get('jwtToken'); 
 
@@ -47,17 +59,22 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={ <Home /> } />
+
+        <Route path='/allProducts' element={<AdminMiddleware> <AllProducts /> </AdminMiddleware>} />
+        <Route path='/category' element={<AdminMiddleware> <Categories /> </AdminMiddleware>} />
+        <Route path='/allComments' element={<AdminMiddleware> <AllComments /> </AdminMiddleware>} />
+        <Route path='/allUsers' element={<AdminMiddleware> <AllUsers /> </AdminMiddleware>} />
+        <Route path='/city' element={<AdminMiddleware> <Cities /> </AdminMiddleware>} />
+
         <Route path='/dashboard' element={<LogoutMiddleware> <Dashboard /> </LogoutMiddleware>} />
-        <Route path='/allProducts' element={<LogoutMiddleware> <AllProducts /> </LogoutMiddleware>} />
         <Route path='/addProduct' element={<LogoutMiddleware> <AddProduct /> </LogoutMiddleware>} />
         <Route path='/editProduct' element={<LogoutMiddleware> <EditProduct /> </LogoutMiddleware>} />
-        <Route path='/productDetails' element={<LogoutMiddleware> <ProductDetails /> </LogoutMiddleware>} />
-        <Route path='/category' element={<LogoutMiddleware> <Categories /> </LogoutMiddleware>} />
-        <Route path='/allComments' element={<LogoutMiddleware> <AllComments /> </LogoutMiddleware>} />
-        <Route path='/allUsers' element={<LogoutMiddleware> <AllUsers /> </LogoutMiddleware>} />
-        <Route path='/city' element={<LogoutMiddleware> <Cities /> </LogoutMiddleware>} />
+
         <Route path='/register' element={<LoginMiddleware> <Register /> </LoginMiddleware>} />
         <Route path='/login' element={<LoginMiddleware> <Login /> </LoginMiddleware>} />
+        
+        <Route path='/allItems' element={ <AllItems /> }/>
+        <Route path='/productDetails' element={ <ProductDetails /> }/>
         <Route path='/forgotPassword' element={ <ForgotPassword />} />
         <Route path='/resetPassword/:token' element={ <ResetPassword /> }/>
         <Route path='/verifyEmail/:token' element={ <VerifyEmail /> }/>

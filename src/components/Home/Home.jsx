@@ -1,9 +1,9 @@
-// eslint-disable-next-line no-unused-vars
 import React from 'react'
 import NavBar from '../Layouts/NavBar'
 import Footer from '../Layouts/Footer'
 import Cookies from 'js-cookie';
-import homeCss from './home.css'
+import { Link } from 'react-router-dom';
+import './home.css'
 
 
 
@@ -77,9 +77,23 @@ const Home = () => {
             )}  
       </div>
 
-      {/* <div id='nextSection' className=" block items-center justify-center mb-10">
-           hhhhhhhhhhhhhhh
-      </div> */}  
+      <div className=" block items-center justify-center mb-10">
+        
+        {/* back button */}
+        <div className="container w-3/4 items-center rounded-lg mb-3 text-end">
+          <button className=" items-center text-white ps-2 p-1 bg-black rounded-md">
+            <Link to="/allItems" className='flex'>
+              <p className='text-xs'>
+                View More
+              </p>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+              </svg>
+            </Link>
+          </button>
+        </div>
+
+      </div> 
 
 
       <Footer/>

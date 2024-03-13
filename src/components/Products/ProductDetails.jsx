@@ -3,6 +3,8 @@ import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import Comments from '../Comment/ProductComments';
 import { useLocation } from 'react-router-dom';
+import { formatDistanceToNow } from "date-fns";
+
 
 
 const ProductDetails = () => {
@@ -125,11 +127,15 @@ const ProductDetails = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mb-0.5 me-1">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                   </svg>
-                  <p className=""> agadir - </p>
+                  <p className=""> {product.city_id?.name} - </p>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 mx-1">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
-                  <p className="">listed date</p>
+                  {product.updated_at ? 
+                  <p className="">
+                    {formatDistanceToNow(new Date(product.updated_at), {
+                    addSuffix: true,
+                  })}</p>: null}
                 </div>
 
                 <div>
