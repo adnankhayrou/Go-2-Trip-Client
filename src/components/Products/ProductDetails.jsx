@@ -85,10 +85,10 @@ const ProductDetails = () => {
               {product.images && product.images.length > 0 && (
               <div className="relative h-56 overflow-hidden rounded-lg md:h-96 ">
                   {product.images.map((image, index) => (
-                    <div key={index}  className={`image-slide ${index === currentImageIndex ? 'block' : 'hidden'}`}>
-                      <img  src={`http://localhost:3000${image}`}
-                            alt={`Slide ${index}`}
-                            className="absolute inset-0 rounded w-max h-full object-cover sm:ms-[280px] ms-[47px]" />
+                    <div key={index}  className={`image-slide ${index === currentImageIndex ? 'block' : 'hidden'} flex justify-center items-center`}>
+                      <div>
+                       <img src={`http://localhost:3000${image}`} alt={`Slide ${index}`} className=" rounded w-max sm:h-80 sm:mt-8 mt-auto" />
+                      </div>
                     </div>
                   ))}
               </div>

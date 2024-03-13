@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { formatDistanceToNow } from "date-fns";
 import sweetalert from 'sweetalert2';
 import * as yup from 'yup';
+import { Link } from 'react-router-dom';
 
 
 const ProductComments = ({product}) => {
@@ -18,7 +19,7 @@ const [error, setError] = useState(null);
 const [addFormData, setAddFormData] = useState({
     content: '',
     product_id: product._id,
-    user_id: user._id,
+    user_id: user?._id,
 });
 
 const fetchData = async () => {
@@ -199,7 +200,7 @@ useEffect(() => {
 
                                 <div className={`${editForm == false ? '' : 'hidden'}`}>
                                     <span className="text-gray-500 mx-4" style={{ fontSize: '.7em' }}>{formatDistanceToNow(new Date(comment.updated_at), {addSuffix: true,})}</span>
-                                    {comment.user_id._id === user._id ? (
+                                    {comment.user_id._id === user?._id ? (
                                         <span><button onClick={() => editComment(comment)}><b className="text-green-700" style={{ fontSize: '.7em' }}>edit</b></button> <span><button onClick={() => deleteComment(comment._id)}  className="text-red-700" style={{ fontSize: '.7em' }}><b>delete</b></button></span></span>
                                     ) : null}
                                 </div>
@@ -213,7 +214,8 @@ useEffect(() => {
 
         <hr className="my-3" />
         <div className="container">
-            <form className="flex" onSubmit={handleSubmit}>
+          {user ? 
+          <form className="flex" onSubmit={handleSubmit}>
             <input 
             type="text" 
             className='w-full p-1 me-2 rounded border border-gray' 
@@ -236,8 +238,20 @@ useEffect(() => {
                 </svg>
             </button>}
 
-            </form>
-            {errors.content && <div className="text-red-600 text-xs pe-28 text-start">{errors.content}</div>}
+          </form>
+          : <div className="flex">
+          <input 
+          type="text" 
+          className='w-full p-1 me-2 rounded border border-gray' 
+          placeholder="login first to write a comment" 
+          />   
+
+          <Link to="/login" className="flex ms-2 px-1 my-[2.5px] rounded bg-black text-white items-center" >
+              login
+          </Link>
+
+        </div>}
+          {errors.content && <div className="text-red-600 text-xs pe-28 text-start">{errors.content}</div>}
         </div>
     </div>
   )

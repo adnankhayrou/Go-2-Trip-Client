@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import NavBar from '../Layouts/NavBar'
-import SideBar from '../Layouts/SideBar'
+import UserSideBar from '../Layouts/UserSideBar'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from "date-fns";
@@ -36,7 +36,7 @@ const AllItems = () => {
   return (
     <>
     <NavBar/>
-    <SideBar/>
+    <UserSideBar/>
 
         {/* single table */}
       {loading ? (
@@ -77,7 +77,7 @@ const AllItems = () => {
               {products.map((product, index) => (
               <div key={index} className="sm:w-60 w-80 bg-white shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl">
                   <button onClick={() => productDetails(product._id)}>
-                      <img src={`http://localhost:3000${product.images[0]}`} alt="Product" className="h-70 w-80 sm:w-60 object-cover rounded-t-xl" />
+                      <img src={`http://localhost:3000${product.images[0]}`} alt="Product" className="h-40 w-80 sm:w-60 object-cover rounded-t-lg" />
                   </button>
                       <div className="px-4 py-3 sm:w-60 w-80">
                           <div className='flex items-center justify-between'>
