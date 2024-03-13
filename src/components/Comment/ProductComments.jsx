@@ -23,9 +23,10 @@ const [addFormData, setAddFormData] = useState({
 
 const fetchData = async () => {
     try {
+      if(product._id){
       const response = await axios.get(`http://localhost:3000/api/comment/getComments/${product._id}`);
-    //   console.log(response.data.data);
       setComment(response.data.data);
+    }
     } catch (error) {
       console.error(error);
     }
@@ -149,12 +150,12 @@ useEffect(() => {
 }, [refetch]);
 
   return (
-    <div className="container border p-3 rounded">
-        <div className="col-12 mb-3">
-            <p className="me-2"><b>Comments Section</b></p>
+    <div className="container border p-3 rounded-lg">
+        <div className=" mb-3">
+            <p className="me-2"><b>Comments Section</b> <span className='text-xs text-gray-400'>this product have {comments.length} comments</span></p>
         </div>
 
-        <div id="comentScroll" className="overflow-auto mb-3 p-3 bg-gray-100 rounded" style={{ maxWidth: '100%', maxHeight: '20em' }}>
+        <div id="comentScroll" className="overflow-auto mb-3 p-3 bg-gray-100 rounded-lg" style={{ maxWidth: '100%', maxHeight: '20em' }}>
             {comments.map((comment, index) => {
                 if (product._id === comment.product_id) {
                     return (

@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import Comments from '../Comment/ProductComments';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 const ProductDetails = () => {
+  
   const location = useLocation();
   let product_id = location.state.productId;
 
@@ -42,6 +43,10 @@ const ProductDetails = () => {
       prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  const goBack = () => {
+    window.history.back();
+  };
   
   return (
     <>
@@ -65,11 +70,11 @@ const ProductDetails = () => {
     <div className="sm:mx-0 mx-5 sm:ml-64 pt-24">
         {/* back button */}
         <div className="container w-3/4 items-center rounded-lg mb-3 me-3 ">
-          <Link to="/dashboard" className="text-decoration-none text-black">
+          <button onClick={goBack} className="text-decoration-none text-black">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
             </svg>
-          </Link>
+          </button>
         </div>
 
         <div className="container pt-3 w-3/3 sm:w-3/4 bg-white p-2 rounded-lg mb-5 shadow-2xl ">
