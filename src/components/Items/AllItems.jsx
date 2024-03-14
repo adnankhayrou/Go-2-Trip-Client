@@ -72,12 +72,12 @@ const AllItems = () => {
 
       {/* products cards */}
       <div className="sm:ml-64 sm:px-10">
-          <section id="Projects" className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+          <section id="Projects" className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-12 mt-10 mb-5">
               {/* card 1 */}
               {products.map((product, index) => (
-              <div key={index} className="sm:w-60 w-80 bg-white shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl">
+              <div key={index} className="sm:w-60 w-80 bg-white shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl border">
                   <button onClick={() => productDetails(product._id)}>
-                      <img src={`http://localhost:3000${product.images[0]}`} alt="Product" className="h-40 w-80 sm:w-60 object-cover rounded-t-lg" />
+                      <img src={`http://localhost:3000${product.images[0]}`} alt="Product" className=" border h-40 w-80 sm:w-60 object-cover rounded-t-lg" />
                   </button>
                       <div className="px-4 py-3 sm:w-60 w-80">
                           <div className='flex items-center justify-between'>
@@ -85,17 +85,25 @@ const AllItems = () => {
                             <span className="text-gray-400 uppercase text-xs">{product.category_id.name}</span>
                           </div>
 
-                          <div className="mt-3 flex items-center text-gray-400 ">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 mb-0.5 me-1">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                            </svg>
-                            <p className="text-xs"> {product.city_id.name} - </p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 mx-1">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <p className="text-xs">{formatDistanceToNow(new Date(product.updated_at), {
-                              addSuffix: true,
-                            })}</p>
+                          <div className="mt-3 items-center text-gray-400 ">
+
+                            <div className='flex'>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mb-0.5 me-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                              </svg>
+                              <p className="text-xs ">{product.city_id.name}</p>
+                            </div>
+
+                            <div className='flex mt-2'>
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 me-1">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                              </svg>
+                              <p className="text-xs">{formatDistanceToNow(new Date(product.updated_at), {
+                                addSuffix: true,
+                              })}</p>
+                            </div>
+
                           </div>
 
                           <div className="flex items-center">

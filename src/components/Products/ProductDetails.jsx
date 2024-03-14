@@ -87,7 +87,7 @@ const ProductDetails = () => {
                   {product.images.map((image, index) => (
                     <div key={index}  className={`image-slide ${index === currentImageIndex ? 'block' : 'hidden'} flex justify-center items-center`}>
                       <div>
-                       <img src={`http://localhost:3000${image}`} alt={`Slide ${index}`} className=" rounded w-max sm:h-80 sm:mt-8 mt-auto" />
+                       <img src={`http://localhost:3000${image}`} alt={`Slide ${index}`} className=" rounded w-full sm:h-80 sm:mt-8 h-60" />
                       </div>
                     </div>
                   ))}
