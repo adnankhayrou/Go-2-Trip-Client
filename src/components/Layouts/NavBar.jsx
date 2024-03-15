@@ -55,7 +55,7 @@ const NavBar = () => {
           <>
           <div className="flex items-center">
 
-          <Link to="" className="me-6 mt-1">
+          <Link to="/savedProducts" className="me-6 mt-1">
           <span className="count absolute top-4 sm:top-[17px] sm:right-[68px] right-[60px] text-xs bg-red-500 rounded-full w-4 h-4 text-center text-white font-bold">{favorites.length}</span>
             <span className=" font-bold sm:text-lg whitespace-nowrap dark:text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
