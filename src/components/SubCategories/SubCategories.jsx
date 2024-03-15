@@ -263,7 +263,7 @@ const SubCategories = ({ categories }) => {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
-                <th scope="col" className="text-yellow-600 px-3 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
+                <th scope="col" className="text-black px-3 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
                   SubCategories
                 </th>
               </tr>

@@ -109,7 +109,7 @@ const AllProducts = () => {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
-                <th scope="col" className="text-yellow-600 px-4 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
+                <th scope="col" className="text-black px-4 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
                  All Products
                 </th>
                 <th scope="col" className="bg-gray-100">
@@ -128,7 +128,7 @@ const AllProducts = () => {
                 </th>
                 <th scope="col" className="bg-gray-100">               
                 </th>
-                <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
+                <th scope="col" className="text-black px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
                     <Link to="/addProduct" className="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

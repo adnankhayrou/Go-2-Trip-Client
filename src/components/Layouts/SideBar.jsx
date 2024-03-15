@@ -101,16 +101,51 @@ const SideBare = () => {
             </div>
            </div>
           <ul className="ms-3 space-y-2 mt-5 font-medium items-center text-center">
+          {user.role === "Seller" ? 
+            <li className=''>
+            <Link to="/ " className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
+              <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+              <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+            </svg>
+               <span className="ms-3 mt-1">Home</span>
+            </Link>
+            </li>
+              : null}
 
             <li>
             <Link to="/dashboard" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
-              <path d="M12.378 1.602a.75.75 0 0 0-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03ZM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 0 0 .372-.648V7.93ZM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 0 0 .372.648l8.628 5.033Z" />
-            </svg>
-            <span className="ms-3">Your Products</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
+                <path d="M12.378 1.602a.75.75 0 0 0-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03ZM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 0 0 .372-.648V7.93ZM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 0 0 .372.648l8.628 5.033Z" />
+              </svg>
+              <span className="ms-3">Your Products</span>
             </Link>
             </li>
-            
+
+            {user.role === "Seller" ? 
+              <>
+            <li>
+            <Link to="/allItems" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
+              <path fill-rule="evenodd" d="M1.5 7.125c0-1.036.84-1.875 1.875-1.875h6c1.036 0 1.875.84 1.875 1.875v3.75c0 1.036-.84 1.875-1.875 1.875h-6A1.875 1.875 0 0 1 1.5 10.875v-3.75Zm12 1.5c0-1.036.84-1.875 1.875-1.875h5.25c1.035 0 1.875.84 1.875 1.875v8.25c0 1.035-.84 1.875-1.875 1.875h-5.25a1.875 1.875 0 0 1-1.875-1.875v-8.25ZM3 16.125c0-1.036.84-1.875 1.875-1.875h5.25c1.036 0 1.875.84 1.875 1.875v2.25c0 1.035-.84 1.875-1.875 1.875h-5.25A1.875 1.875 0 0 1 3 18.375v-2.25Z" clip-rule="evenodd" />
+            </svg>
+               <span className="ms-3">All items</span>
+            </Link>
+            </li>
+
+            <li>
+            <Link to="/savedProducts" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
+              <path fill-rule="evenodd" d="M6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3H6Zm1.5 1.5a.75.75 0 0 0-.75.75V16.5a.75.75 0 0 0 1.085.67L12 15.089l4.165 2.083a.75.75 0 0 0 1.085-.671V5.25a.75.75 0 0 0-.75-.75h-9Z" clip-rule="evenodd" />
+            </svg>
+               <span className="ms-3">Saved Products</span>
+            </Link>
+            </li>
+              </>
+              : null}
+
+            {user.role === "Admin" ? 
+            <>
             <li className=''>
             <Link to="/allProducts" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
@@ -119,7 +154,7 @@ const SideBare = () => {
                <span className="ms-3">All Products</span>
             </Link>
             </li>
-
+              
 
             <li>
             <Link to="/category" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
@@ -131,7 +166,7 @@ const SideBare = () => {
                <span className="ms-3">Categories</span>
             </Link>
             </li>
-
+            
             <li>
             <Link to="/allComments" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">
@@ -159,7 +194,8 @@ const SideBare = () => {
                <span className="ms-3">Cities</span>
             </Link>
             </li>
-            
+            </>
+              : null }
             <li>
                 <Link to="/forgotPassword" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-black">

@@ -47,7 +47,6 @@ const SavedProducts = () => {
         ) : (
           <>
       
-      {/* search bar */}
       <div className="sm:ml-64 sm:px-10 sm:pt-28 pt-4">
         <div className='flex items-center justify-center'>
             <p className='w-80 border rounded-lg text-center p-1 bg-white text-black shadow font-bold text-[13px]'>You Have {favorites.length} Saved Products</p>

@@ -20,7 +20,6 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const response = await axios.get(`http://localhost:3000/api/product/userProducts/${user_id}`);
-      // console.log(response.data.data);
       setProduct(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -71,19 +70,10 @@ const Dashboard = () => {
     <>
     <NavBar/>
     <SideBar/>
+    {user.role === "Admin" ?
     <Statistics/>
+      : null }
 
-     {/* add button */}
-      <div className="sm:ml-64 sm:px-14 ps-3 my-2 sm:me-0 me-6 sm:hidden">
-        <div className=" rounded-lg">
-          <div className='flex justify-end'>
-            <Link to="/addProduct" className="shadow-2xl block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
-              + Add New Product
-            </Link>
-          </div>
-        </div>
-      </div>
-        {/* single table */}
       {loading ? (
         <div className="sm:ml-64 pt-2">
       <div className="flex justify-center items-center mt-40 sm:me-40">
@@ -99,20 +89,48 @@ const Dashboard = () => {
       </div>
       </div>
       ) : (
-        loading ? (
-          <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
-            <p className="fs-3">You Have No Products For This Moment!</p>
+        products.length == 0 ? (
+          <div className="sm:ml-64 sm:ps-0 sm:ms-40 sm:pt-28">
+            <div className='flex items-center justify-center mt-48'>
+              <Link to="/addProduct">
+              <div className='items-center text-center text-gray-500'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ms-[80px] w-10 h-10">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <p className='font-bold '>You have No Product Yet ,<br />Add Your First Product Now.</p>
+                </div>
+                </Link>
+            </div>
           </div>
         ) : (
           <>
-      
+      {user.role == "Seller" ?
+      <div className="sm:ml-64 sm:px-10 sm:pt-28 pt-5">
+        <div className='flex items-center justify-center'>
+            <p className='w-80 border rounded-lg text-center p-1 bg-white text-black shadow font-bold text-[13px]'>You Have {products.length} Products</p>
+        </div>
+      </div>
+      : null }
+      {/* add button */}
+      <div className="sm:ml-64 sm:px-14 ps-3 my-2 mt-5 sm:me-0 me-3 sm:hidden">
+        <div className=" rounded-lg">
+          <div className='flex justify-end'>
+            <Link to="/addProduct" className="flex shadow-2xl block text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black " >
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 me-2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+               New Product
+            </Link>
+          </div>
+        </div>
+      </div>
       {/* products table */}
-      <div className="sm:ml-64 sm:px-10 ps-3">
+      <div className="sm:ml-64 sm:px-10 ps-3 sm:mt-8">
         <div className="overflow-x-auto rounded-lg mb-3 me-3 shadow-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
               <tr>
-                <th scope="col" className="text-yellow-600 px-4 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
+                <th scope="col" className="font-bold text-black px-4 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none py-3">
                   Products details
                 </th>
                 <th scope="col" className="bg-gray-100">
@@ -131,7 +149,7 @@ const Dashboard = () => {
                 </th>
                 <th scope="col" className="bg-gray-100">               
                 </th>
-                <th scope="col" className="text-yellow-600 px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
+                <th scope="col" className="text-black px-6 rounded-tl-lg rounded-tr-lg rounded-br-none rounded-bl-none">
                     <Link to="/addProduct" className="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
