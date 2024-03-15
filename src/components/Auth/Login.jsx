@@ -1,12 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import logo from "../../assets/images/gototrip.svg";
+import {DataContext} from '../Context/DataProvider';
 
 
 const Login = () => {
+  const { loadFavorites } = useContext(DataContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -55,6 +57,8 @@ const Login = () => {
           Cookies.set("jwtToken", token);
           const user = JSON.stringify( result.data.user);
           Cookies.set('user', user) ;
+          loadFavorites();
+          window.location.reload();
           navigate('/')
         })
         .catch((err) => {

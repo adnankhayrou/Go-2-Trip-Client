@@ -1,4 +1,3 @@
-import React from 'react'
 import NavBar from '../Layouts/NavBar'
 import Footer from '../Layouts/Footer'
 import Cookies from 'js-cookie';
@@ -33,7 +32,6 @@ const Home = () => {
       requestAnimationFrame(step);
     }
   };
-
 
   return (
     <>
@@ -86,8 +84,8 @@ const Home = () => {
               <p className='text-xs'>
                 View More
               </p>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
               </svg>
             </Link>
           </button>
