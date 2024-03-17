@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from "date-fns";
 import {DataContext} from '../Context/DataProvider';
 import Cookies from 'js-cookie';
+import Carousel from '../Carousel/Carousel';
 
 
 const AllItems = () => {
@@ -67,17 +68,13 @@ const AllItems = () => {
           <>
       
       {/* search bar */}
-      <div className="sm:ml-64 sm:px-10 ps-3 sm:pt-28 pt-4">
-        <div className="overflow-x-auto rounded-lg mb-3 me-3 shadow ">
-          <div className='flex items-center justify-end'>
-            <input type="search" className='border rounded p-1 m-1'/>
-          </div>
-        </div>
+      <div className="sm:ml-64 sm:px-8 px-3 rounded sm:pt-28">
+        <Carousel />
       </div>
 
       {/* products cards */}
       <div className="sm:ml-64 sm:px-10">
-          <section id="Projects" className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-12 mt-10 mb-5">
+          <section id="Projects" className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-12 gap-x-12 mt-5 mb-5">
               {/* card 1 */}
               {products.map((product, index) => (
               <div key={index} className="sm:w-60 w-80 bg-white shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl border">

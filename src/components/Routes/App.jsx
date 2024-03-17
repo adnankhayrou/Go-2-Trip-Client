@@ -17,6 +17,7 @@ import AllProducts from '../Products/AllProducts'
 import ProductDetails from '../Products/ProductDetails'
 import AllItems from '../Items/AllItems'
 import SavedProducts from '../SaveProducts/SavedProducts'
+import FilterResults from '../FilterResults/FilterResults'
 
 const AdminMiddleware = ({ children }) => {
   const isAuthenticated = !!Cookies.get('jwtToken'); 
@@ -76,6 +77,7 @@ function App() {
         <Route path='/login' element={<LoginMiddleware> <Login /> </LoginMiddleware>} />
         
         <Route path='/allItems' element={ <AllItems /> }/>
+        <Route path='/filterResults' element={ <FilterResults /> }/>
         <Route path='/productDetails' element={ <ProductDetails /> }/>
         <Route path='/forgotPassword' element={ <ForgotPassword />} />
         <Route path='/resetPassword/:token' element={ <ResetPassword /> }/>
