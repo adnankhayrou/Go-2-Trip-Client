@@ -21,7 +21,6 @@ const AllItems = () => {
       try {
         setLoading(true);
         const response = await axios.get(`http://localhost:3000/api/product/allProduct`);
-        // console.log(response.data.data);
         setProduct(response.data.data);
         setLoading(false);
       } catch (error) {

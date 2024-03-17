@@ -47,7 +47,13 @@ const UserSideBar = () => {
 
       const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/filterResults', { state: { formData: formData }});
+        navigate('/filterResults', { state: { searchData: formData }});
+        setFormData({
+          name: '',
+          city_id: '',
+          category_id: '',
+          subCategory_id: '',
+      });
       }
   return (
     <>
@@ -126,7 +132,7 @@ const UserSideBar = () => {
                                     value={formData.category_id}
                                     onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
                                       autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm">
-                                     <option>select your category</option>
+                                     <option value="">select your category</option>
                                     {categories.map((category, index)=>(
                                         <option key={index} value={category._id}>{category.name}</option>
                                     ))}
@@ -143,7 +149,7 @@ const UserSideBar = () => {
                                      id="country" name="country" autoComplete="country-name" 
                                      disabled={subCategories.length === 0}
                                      className=" block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm">
-                                    <option>select your Subcategory</option>
+                                    <option value="">select your Subcategory</option>
                                     {subCategories.map((SubCategory, index)=>(
                                         <option key={index} value={SubCategory._id}>{SubCategory.name}</option>
                                     ))}
@@ -159,7 +165,7 @@ const UserSideBar = () => {
                                     value={formData.city_id}
                                     onChange={(e) => setFormData({ ...formData, city_id: e.target.value })}
                                      id="country" name="country" autoComplete="country-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:max-w-xs sm:text-sm ">
-                                    <option >select your city</option>
+                                    <option value="">select your city</option>
                                     {cities.map((city, index)=>(
                                         <option key={index} value={city._id}>{city.name}</option>
                                     ))}
