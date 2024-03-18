@@ -85,7 +85,9 @@ const schema = yup.object().shape({
     name: yup.string().required('Product Name is Required'),
     description: yup.string().required('Description is Required'),
     price: yup.number().required('Price is Required'),
-    phone: yup.string().required('Phone number is Required'),
+    phone: yup.string()
+    .required('Phone number is Required')
+    .matches(/^[\+]?(212)[6-8]{1}[0-9]{8}$/, 'Invalid phone number format'),
     city_id: yup.string().required('City is Required'),
     category_id: yup.string().required('Category is Required'),
     subCategory_id: yup.string().required('SubCategory is Required'),

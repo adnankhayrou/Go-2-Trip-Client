@@ -63,10 +63,11 @@ const AddProduct = () => {
 
     const schema = yup.object().shape({
         name: yup.string().required('Product Name is Required'),
-        // images: yup.array().required('Image is Required'),
         description: yup.string().required('Description is Required'),
         price: yup.number().required('Price is Required'),
-        phone: yup.string().required('Phone number is Required'),
+        phone: yup.string()
+        .required('Phone number is Required')
+        .matches(/^[\+]?(212)[6-8]{1}[0-9]{8}$/, 'Invalid phone number format'),
         city_id: yup.string().required('City is Required'),
         category_id: yup.string().required('Category is Required'),
         subCategory_id: yup.string().required('SubCategory is Required'),
@@ -105,7 +106,6 @@ const AddProduct = () => {
         const categories = await axios.get('http://localhost:3000/api/category/getCategories');
         setCategory(categories.data.data);
 
-        // console.log(addFormData.category_id );
         if (addFormData.category_id && addFormData.category_id !== 'select your category') {
             const subCategoryResponse = await axios.get(`http://localhost:3000/api/subCategory/getSubCategories/${addFormData.category_id}`);
             setSubCategory(subCategoryResponse.data.data);
@@ -143,6 +143,7 @@ const AddProduct = () => {
                                 <label  className="block text-sm font-medium leading-6 text-gray-900">Product name</label>
                                 <div className="">
                                     <input
+                                    placeholder='name'
                                     value={addFormData.name}
                                     onChange={(e) => setAddFormData({ ...addFormData, name: e.target.value })}
                                     type="text" id="first-name" autoComplete="given-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
@@ -154,6 +155,7 @@ const AddProduct = () => {
                                 <label className="block text-sm font-medium leading-6 text-gray-900">Product price</label>
                                 <div className="">
                                     <input
+                                        placeholder='price'
                                         value={addFormData.price}
                                         onChange={(e) => setAddFormData({ ...addFormData, price: e.target.value })}
                                      type="number"  min="0"  id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
@@ -167,6 +169,7 @@ const AddProduct = () => {
                                 <label  className="block text-sm font-medium leading-6 text-gray-900">Phone</label>
                                 <div className="">
                                     <input 
+                                    placeholder='phone : +212 XXX XXX XXX'
                                     value={addFormData.phone}
                                     onChange={(e) => setAddFormData({ ...addFormData, phone: e.target.value })}
                                     type="tel" name="last-name" id="last-name" autoComplete="family-name" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6" />
@@ -252,9 +255,10 @@ const AddProduct = () => {
                             </div>
 
                             <div className="col-span-full">
-                                <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">About</label>
+                                <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">Description</label>
                                 <div className="">
                                     <textarea 
+                                    placeholder='about product'
                                     value={addFormData.description}
                                     onChange={(e) => setAddFormData({ ...addFormData, description: e.target.value })}
                                     id="about" name="about" rows="2" className="block w-full rounded-md border-0 p-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"></textarea>

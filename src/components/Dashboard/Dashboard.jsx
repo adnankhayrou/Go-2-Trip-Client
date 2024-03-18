@@ -94,8 +94,8 @@ const Dashboard = () => {
             <div className='flex items-center justify-center mt-48'>
               <Link to="/addProduct">
               <div className='items-center text-center text-gray-500'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ms-[80px] w-10 h-10">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ms-[80px] w-10 h-10">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 <p className='font-bold '>You have No Product Yet ,<br />Add Your First Product Now.</p>
                 </div>
