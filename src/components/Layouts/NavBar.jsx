@@ -55,12 +55,19 @@ const NavBar = () => {
           <>
           <div className="flex items-center">
 
-          <Link to="/savedProducts" className="me-6 mt-1">
-          <span className="count absolute top-4 sm:top-[17px] sm:right-[68px] right-[60px] text-xs bg-red-500 rounded-full w-4 h-4 text-center text-white font-bold">{favorites.length}</span>
+          <Link to="/savedProducts" className="me-3 mt-1">
+          <span className="count absolute top-4 sm:top-[17px] sm:right-[98px] right-[90px] text-xs bg-red-500 rounded-full w-4 h-4 text-center text-white font-bold">{favorites.length}</span>
             <span className=" font-bold sm:text-lg whitespace-nowrap dark:text-gray-500">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
               </svg>
+            </span>
+          </Link>
+
+          <Link to="/addProduct" className="me-3">
+            <span className="self-center font-bold sm:text-lg whitespace-nowrap dark:text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
             </span>
           </Link>
 

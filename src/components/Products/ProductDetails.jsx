@@ -159,7 +159,7 @@ const ProductDetails = () => {
                   <hr className="my-3" />
                   </div>
 
-                  <div className='flex text-center justify-end pt-2 sm:pt-0'>
+                  <div className='flex text-center sm:justify-end justify-center pt-2 sm:pt-0'>
                     <div className="bg-black border rounded-md me-2 py-1 px-2">
                       <p className="text-white flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
