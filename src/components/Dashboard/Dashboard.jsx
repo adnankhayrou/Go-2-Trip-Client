@@ -203,7 +203,7 @@ const Dashboard = () => {
                   {product.name}
                 </td>
                 <td className="px-6 py-4">
-                  {product.price}DH
+                {product.price}{product.price < 100 ? '.00dh' : 'dh'}
                 </td>
                 <td className="px-6 py-4">
                   {product.city_id.name}

@@ -95,6 +95,9 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     try {
         await schema.validate(formData, { abortEarly: false });
+        if (formData.images.length === 0 && formData.oldImages.length === 0) {
+            return setErrors({images: 'At least one image is required'});
+        }
         const requestData = { ...formData };
 
         axios.post(`http://localhost:3000/api/product/updateProduct/${product_id}`, requestData)
@@ -271,7 +274,7 @@ return (
                             onChange={handleImageChange}
                             id="dropzone-file" type="file" className="hidden" multiple/>
                         </label>
-                        {errors.oldImages && <span className="text-red-600 text-xs">Image is Required</span>}
+                        {errors.images && <span className="text-red-600 text-xs">Image is Required</span>}
                         </div>
 
                         <div className="sm:col-span-2 sm:col-start-1">

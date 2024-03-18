@@ -16,7 +16,6 @@ const AddProduct = () => {
     const [categories, setCategory] = useState([]);
     const [subCategories, setSubCategory] = useState([]);
     const [cities, setCity] = useState([]);
-    // console.log(categories);
     const [addFormData, setAddFormData] = useState({
         name: '',
         images: [],
@@ -76,9 +75,11 @@ const AddProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          await schema.validate(addFormData, { abortEarly: false });
+            await schema.validate(addFormData, { abortEarly: false });
+            if(addFormData.images.length === 0){
+              return setErrors({images: 'image is requered'})
+            }
           const requestData = { ...addFormData };
-            console.log(requestData);
           axios.post('http://localhost:3000/api/product/createProduct', requestData)
             .then(result => {
               const msg = result.data.success;
@@ -172,12 +173,12 @@ const AddProduct = () => {
                                 </div>
                                 {errors.phone && <span className="text-red-600 text-xs">{errors.phone}</span>}
                             </div>
+
                            <div className='flex flex-wrap gap-2 justify-center sm:col-span-6'>
-                                {addFormData.images.map((image,index)=>(
-                                    <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${image})`}}>
-                                        <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e)=>removeImage(e,index)}>x</button>
-                                    </div>
-                                
+                            {addFormData.images.map((image,index)=>(
+                                <div key={index} className='w-[100px] h-[100px] rounded overflow-hidden relative bg-cover bg-center bg-no-repeat' style={{backgroundImage:`url(${image})`}}>
+                                    <button className='absolute top-[5px] right-[5px] rounded-full bg-black text-white px-2 py-1' onClick={(e)=>removeImage(e,index)}>x</button>
+                                </div>
                             ))}
                             </div>
                             <div className="sm:col-span-6">
