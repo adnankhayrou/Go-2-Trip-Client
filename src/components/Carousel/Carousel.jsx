@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import cover1 from "../../assets/images/22.svg";
 import cover2 from "../../assets/images/23.svg";
 import cover3 from "../../assets/images/24.svg";
+import cover4 from "../../assets/images/cover2.jpg";
+import cover5 from "../../assets/images/cover3.jpg";
+import cover6 from "../../assets/images/cover4.jpg";
 
 const Carousel = () => {
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
-  const covers = [cover1, cover2, cover3];
+  const covers = [cover1, cover4, cover2, cover5, cover3, cover6,];
 
   const goToNextCover = () => {
     setCurrentCoverIndex((prevIndex) =>
@@ -14,7 +17,7 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(goToNextCover, 2000);
+    const intervalId = setInterval(goToNextCover, 3000);
     return () => clearInterval(intervalId);
   }, [currentCoverIndex]);
 
