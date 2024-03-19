@@ -58,12 +58,12 @@ const Dashboard = () => {
     fetchData();
   }, [refetch]);
 
-  const editProduct = (id) => {
-    navigate('/editProduct', { state: { productId: id }});
+  const editProduct = (product) => {
+    navigate('/editProduct', { state: { product: product }});
   }
 
-  const productDetails = (id) => {
-    navigate('/productDetails', { state: { productId: id }});
+  const productDetails = (product) => {
+    navigate('/productDetails', { state: { product: product }});
   }
 
   return (
@@ -125,7 +125,7 @@ const Dashboard = () => {
         </div>
       </div>
       {/* products table */}
-      <div className="sm:ml-64 sm:px-10 ps-3 sm:mt-8">
+      <div className="sm:ml-64 sm:px-10 ps-3 sm:mt-6">
         <div className="overflow-x-auto rounded-lg mb-3 me-3 shadow-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-white dark:bg-white dark:text-gray-400">
@@ -219,7 +219,7 @@ const Dashboard = () => {
                 </td>
                 <td className="px-8 py-4">
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  onClick={() => productDetails(product._id)}
+                  onClick={() => productDetails(product)}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
@@ -229,7 +229,7 @@ const Dashboard = () => {
                 </td>
                 <td className="px-9 py-4">
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  onClick={() => editProduct(product._id)}
+                  onClick={() => editProduct(product)}
                   >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-green-600">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />

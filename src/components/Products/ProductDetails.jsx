@@ -1,38 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import NavBar from '../Layouts/NavBar'
-import axios from 'axios';
 import Comments from '../Comment/ProductComments';
 import { useLocation } from 'react-router-dom';
 import { formatDistanceToNow } from "date-fns";
 
-
-
 const ProductDetails = () => {
   
   const location = useLocation();
-  let product_id = location.state.productId;
+  let showProduct = location.state.product;
 
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
-      // console.log(response.data.data);
-      setProduct(response.data.data);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
-  }, [product_id]);
-
+    setLoading(true);
+    setProduct(showProduct);
+    setLoading(false);
+  }, [showProduct]);
 
   const goToPreviousSlide = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -196,7 +181,7 @@ const ProductDetails = () => {
                   <hr className="my-2" />
                 </div>
 
-                <Comments product={product}/>
+                <Comments product={showProduct}/>
                 
             </div>
         </div>

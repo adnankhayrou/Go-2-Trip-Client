@@ -35,8 +35,8 @@ const FilterResults = () => {
       loadFavorites();
     }, [searchData]);
 
-    const productDetails = (id) => {
-      navigate('/productDetails', { state: { productId: id }});
+    const productDetails = (product) => {
+      navigate('/productDetails', { state: { product: product }});
     }
 
   return (
@@ -80,7 +80,7 @@ const FilterResults = () => {
               {/* card 1 */}
               {products.map((product, index) => (
               <div key={index} className="sm:w-60 w-80 bg-white shadow-md rounded-lg duration-500 hover:scale-105 hover:shadow-xl border">
-                  <button onClick={() => productDetails(product._id)}>
+                  <button onClick={() => productDetails(product)}>
                       <img src={`http://localhost:3000${product.images[0]}`} alt="Product" className=" border h-40 w-80 sm:w-60 object-cover rounded-t-lg" />
                   </button>
                       <div className="px-4 py-3 sm:w-60 w-80">

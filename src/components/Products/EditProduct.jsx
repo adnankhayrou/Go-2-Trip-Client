@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 
 const EditProduct = () => {
 const location = useLocation();
-let product_id = location.state.productId;
+let productToEdit = location.state.product;
 
 const user = JSON.parse(Cookies.get('user') || null);
 const user_id = user._id
@@ -102,7 +102,7 @@ const handleSubmit = async (e) => {
         }
         const requestData = { ...formData };
 
-        axios.post(`http://localhost:3000/api/product/updateProduct/${product_id}`, requestData)
+        axios.post(`http://localhost:3000/api/product/updateProduct/${productToEdit._id}`, requestData)
         .then(result => {
             const msg = result.data.success;
             sweetalert.fire('Success!', `${msg}`, 'success');
@@ -120,30 +120,6 @@ const handleSubmit = async (e) => {
         });
         setErrors(fieldErrors);
     }
-};
-
-const fetchData = async () => {
-try {
-    setLoading(true)
-    const response = await axios.get(`http://localhost:3000/api/product/getProduct/${product_id}`);
-    // console.log(response.data);
-    setOldImg(response.data.data.images)
-    setFormData({
-        name: response.data.data.name,
-        oldImages: response.data.data.images,
-        images: [],
-        description: response.data.data.description,
-        price: response.data.data.price,
-        phone: response.data.data.phone,
-        city_id: response.data.data.city_id._id,
-        category_id: response.data.data.category_id._id,
-        subCategory_id: response.data.data.subCategory_id._id,
-        user_id: user_id,
-    });    
-    setLoading(false)
-} catch (error) {
-    console.error(error);
-}
 };
 
 const fetchCategories = async () => {
@@ -168,7 +144,21 @@ try {
 };
 
 useEffect(() => {
-    fetchData();
+    setLoading(true)
+    setOldImg(productToEdit.images)
+    setFormData({
+        name: productToEdit.name,
+        oldImages: productToEdit.images,
+        images: [],
+        description: productToEdit.description,
+        price: productToEdit.price,
+        phone: productToEdit.phone,
+        city_id: productToEdit.city_id._id,
+        category_id: productToEdit.category_id._id,
+        subCategory_id: productToEdit.subCategory_id._id,
+        user_id: user_id,
+    });    
+    setLoading(false)
 }, []); 
 
 useEffect(() => {
