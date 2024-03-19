@@ -3,7 +3,7 @@ import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import * as yup from 'yup';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const EditProduct = () => {
@@ -200,7 +200,7 @@ return (
     </div>
     ) : (
         <>
-        {/* Add modal */}
+        {/* edit modal */}
         <div className="justify-center items-center flex pt-20 overflow-x-hidden overflow-y-hidden inset-0 z-50 outline-none focus:outline-none">
         <div className="sm:w-full w-max my-6 mx-auto max-w-3xl">
 

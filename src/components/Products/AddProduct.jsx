@@ -3,7 +3,7 @@ import NavBar from '../Layouts/NavBar'
 import axios from 'axios';
 import sweetalert from 'sweetalert2';
 import * as yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const AddProduct = () => {

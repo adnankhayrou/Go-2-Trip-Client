@@ -22,11 +22,11 @@ const Carousel = () => {
   }, [currentCoverIndex]);
 
   return (
-    <div className="overflow-hidden rounded-lg h-60">
+    <div className="overflow-hidden rounded-lg sm:h-60 shadow-lg">
       {covers.map((cover, index) => (
-        <div key={index} className={`cover-slide ${index === currentCoverIndex ? 'block' : 'hidden'} `}>
+        <div key={index} className={`cover-slide ${index === currentCoverIndex ? 'block' : 'hidden'}`}>
           <div>
-            <img src={cover} alt={`Cover ${index}`} className="rounded  sm:h-80 h-60" />
+            <img src={cover} alt={`Cover ${index}`} className="rounded  sm:h-80 " />
           </div>
         </div>
       ))}

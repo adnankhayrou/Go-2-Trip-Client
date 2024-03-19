@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import sweetalert from 'sweetalert2';
+import * as yup from 'yup';
 import adminLogo from "../../assets/icons/admin.png";
 import sellerLogo from "../../assets/icons/seller.png";
 
@@ -9,13 +11,49 @@ import sellerLogo from "../../assets/icons/seller.png";
 
 const SideBare = () => {
     const user = JSON.parse(Cookies.get('user'));
+    const navigate = useNavigate()
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [editForm, setEditForm] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [formData, setFormData] = useState({
+      name: user.name,
+    });
+
+    const schema = yup.object().shape({
+      name: yup.string().required('Name is Required'),
+    });
+
+    async function handleEditSubmit(e) {
+        e.preventDefault();
+        try {
+          await schema.validate(formData, { abortEarly: false });
+          const requestData = { ...formData };
+    
+          axios.post(`http://localhost:3000/api/user/updateUser/${user._id}`, requestData)
+            .then(result => {
+              const msg = result.data.success;
+              const newUser = JSON.stringify(result.data.updatedUser);
+              sweetalert.fire('Success!', `${msg}`, 'success');
+              Cookies.set('user', newUser) ;
+              setEditForm(false)
+              setErrors({});
+            })
+            .catch(err => {
+              const errorMsg = err.response ? err.response.data.error : 'An error occurred in update user name';
+              console.log(errorMsg);
+            });
+        } catch (validationError) {
+          const fieldErrors = {};
+          validationError.inner.forEach(err => {
+            fieldErrors[err.path] = err.message;
+          });
+          setErrors(fieldErrors);
+        }
+    };
 
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
     };
-
-    const navigate = useNavigate()
 
     const logout = () => {
         axios.get('http://localhost:3000/api/auth/logout')
@@ -30,7 +68,7 @@ const SideBare = () => {
             const error = err.response ? err.response.data.error : 'An error occurred in logout';
             console.log(error);
         });
-        }
+    }
   return (
     <>
     {!sidebarOpen && (
@@ -85,21 +123,80 @@ const SideBare = () => {
             </svg>
           </button>
           </div>
-          <div className='ms-1 flex items-center'>
 
-          <div className="lg:mt-4 w-10 h-10 me-1">
-            <img src={user.role == "Admin" ? adminLogo : sellerLogo} width={60} alt="Logo"/>
-          </div>
+           <div className='sm:ms-1 mt-5 mx-1 sm:mx-0 flex items-center justify-center border mt-3 rounded-lg shadow-lg'>
+            <div className='mt-3'>
 
-          <div className="lg:pt-4" role="none">
-                <p className="text-sm font-medium text-gray-900" role="none">
+            <div className='ms-1 flex items-center justify-center mb-5'>
+              <div className="lg:mt-4 w-10 h-10 me-1">
+                <img src={user.role == "Admin" ? adminLogo : sellerLogo } width={60} alt="Logo"/>
+              </div>
+              <div className="lg:pt-4" role="none">
+                <p className="text-xs font-bold text-gray-900" role="none">
                 Welcome {user.name}
                 </p>
                 <p className="text-sm font-medium text-gray-400 truncate" role="none">
                 Your Role is {user.role}
                 </p>
+              </div>
             </div>
-           </div>
+            {editForm == false ?
+                <div className="my-2">
+                <div className=" rounded-xl">
+                    <div className='mx-1 flex items-center justify-center border rounded bg-black text-white'>
+                       <button onClick={()=>setEditForm(true)} className='me-1 text-sm py-1'>edit your name</button>  
+                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                       </svg>
+                    </div>
+                </div>
+            </div>
+                : 
+                <div className={`my-2 `}>
+                    <div className=" rounded-lg">
+                        <form onSubmit={handleEditSubmit} >
+                            {errors.name && <div className="text-red-600 text-xs ms-2">{errors.name}</div>}
+                            <div className='me-1'>
+                                <input 
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                type="text" className='p-1 sm:ms-1 ms-2 w-48 rounded border border-gray'/>
+                              <div className='flex items-center justify-end me-1'>
+                                <button 
+                                onClick={(e)=>{e.preventDefault(); setEditForm(false)}} 
+                                className="text-gray-500 font-medium text-xs me-2" >
+                                    Cancel
+                                </button>
+
+                                <button  className="text-green-600 font-medium text-xs " >
+                                    Save  
+                                </button>
+                              </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>}
+
+              <div className="my-4">
+                  <div className="flex items-center justify-center mt-3">
+                    <Link to="/forgotPassword" className=" flex items-center p-1 text-gray-500 rounded-lg hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-black">
+                      <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clipRule="evenodd" />
+                    </svg>
+                        <span className="ms-1 text-xs">Reset Password</span>
+                    </Link>
+                      <Link onClick={logout} className=" flex items-center p-1 text-gray-500 rounded-lg hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-black">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                    </svg>
+                        <span className="ms-1 text-xs">Logout</span>
+                    </Link>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+
           <ul className="ms-3 space-y-2 mt-5 font-medium items-center text-center">
           {user.role === "Seller" ? 
             <li className=''>
@@ -196,24 +293,6 @@ const SideBare = () => {
             </li>
             </>
               : null }
-            <li>
-                <Link to="/forgotPassword" className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-black">
-                  <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clipRule="evenodd" />
-                </svg>
-                    <span className="ms-3">Reset Password</span>
-                </Link>
-            </li>
-
-            <li>
-                <Link onClick={logout} className="mb-5 flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-black">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                </svg>
-
-                    <span className="ms-3">Logout</span>
-                </Link>
-            </li>
           </ul>
         </div>
       </aside>
