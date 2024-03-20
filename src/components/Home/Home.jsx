@@ -122,9 +122,9 @@ const Home = () => {
             </div>
             </form>
           </div>
-          
+          {/* down */}
           <div  className='font-bold text-white sm:mt-[260px] mt-40 '>
-            <button onClick={handleClick} className='sm:ms-[200px] ms-[140px]'>
+            <button onClick={handleClick} className='sm:ms-[240px] ms-[140px]'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-10 h-10">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
               </svg>
