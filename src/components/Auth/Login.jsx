@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-import logo from "../../assets/images/gototrip.svg";
 import {DataContext} from '../Context/DataProvider';
 
 
@@ -106,7 +105,7 @@ const Login = () => {
           </div>
 
           <div className="flex items-center justify-center me-5">
-            <img src={logo} width={60} alt="Logo"/>
+            <img src={`http://localhost:3000/uploads/goToTrip1.png`} width={60} alt="Logo"/>
           </div>
 
           <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

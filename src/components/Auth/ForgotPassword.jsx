@@ -1,5 +1,4 @@
 import { useState } from "react";
-import logo from "../../assets/images/gototrip.svg";
 import axios from "axios";
 
 const ForgotPassword = () => {
@@ -84,7 +83,7 @@ const ForgotPassword = () => {
     </div>
 
         <div className="flex items-center justify-center me-5">
-            <img src={logo} width={60} alt="Logo"/>
+            <img src={`http://localhost:3000/uploads/goToTrip1.png`} width={60} alt="Logo"/>
         </div>
 
         <button className="mt-6 mb-2 block w-20 select-none rounded-lg bg-black py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg  focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Cookies from 'js-cookie';
-import logo from "../../assets/images/gototrip.svg";
 import {DataContext} from '../Context/DataProvider';
 
 
@@ -41,7 +40,7 @@ const NavBar = () => {
         <div className="flex items-center justify-between sm:ms-3">
           <div className="flex items-center justify-start rtl:justify-end">
             <Link to="/" className="flex md:me-24">
-              <img src={logo} width={40} alt="Logo" />
+              <img src={`http://localhost:3000/uploads/goToTrip1.png`} width={40} alt="Logo" />
               <span className="self-center font-bold sm:text-2xl whitespace-nowrap dark:text-gray-500 pt-3">
                 Go2Trip
               </span>

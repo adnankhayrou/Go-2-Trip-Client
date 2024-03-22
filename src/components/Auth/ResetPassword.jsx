@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import logo from "../../assets/images/gototrip.svg";
 
 
 function ResetPassword() {
@@ -86,7 +85,7 @@ function ResetPassword() {
     </div>
 
     <div className="flex items-center justify-center me-5">
-        <img src={logo} width={60} alt="Logo"/>
+        <img src={`http://localhost:3000/uploads/goToTrip1.png`} width={60} alt="Logo"/>
     </div>   
 
     <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

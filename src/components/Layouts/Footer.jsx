@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from "../../assets/images/gotow.svg";
 
 
 const Footer = () => {
@@ -75,7 +74,7 @@ const Footer = () => {
             </div>
             </div>
             <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-            <img src={logo} width={40} alt="Logo"/>
+            <img src={`http://localhost:3000/uploads/gotow.png`} width={40} alt="Logo"/>
             <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
                 © 2024 Go2Trip. All Rights Reserved.
                 </span>
